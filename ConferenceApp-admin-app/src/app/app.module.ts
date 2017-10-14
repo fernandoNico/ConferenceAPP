@@ -11,10 +11,10 @@ import { LoginComponentComponent } from './login-component/login-component.compo
 import { SignupComponentComponent } from './signup-component/signup-component.component';
 
 const routes: Routes = [
-  { path: 'home', component: SignupComponentComponent },
+  { path: 'signup', component: SignupComponentComponent },
   { path: 'login', component: LoginComponentComponent },
-  { path: 'signup', component: HomeComponentComponent },
-  // { path: 'plugin', component: PluginComponent },
+  { path: 'home', component: HomeComponentComponent },
+  { path: '**', component: HomeComponentComponent },
 ];
 
 
