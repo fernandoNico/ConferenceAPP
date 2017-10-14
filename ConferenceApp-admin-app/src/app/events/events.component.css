@@ -1,0 +1,18 @@
+h1{
+   color:  #f6682F;
+}
+h5,h6{
+  color: black;
+}
+hr{
+    border-color: white;
+}
+
+.card-columns {
+  @include media-breakpoint-only(lg) {
+    column-count: 4;
+}
+  @include media-breakpoint-only(xl) {
+      column-count: 5;
+    }
+}

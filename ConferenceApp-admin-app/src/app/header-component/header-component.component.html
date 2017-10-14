@@ -14,17 +14,17 @@
           <a class="nav-link" [routerLink]="['home']" >Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item" [routerLinkActive]="['active']">
-          <a class="nav-link" [routerLink]="['login']" >Current Events</a>
+          <a class="nav-link" [routerLink]="['events']" >Current Events</a>
         </li>
         <li class="nav-item" [routerLinkActive]="['active']">
-            <a class="nav-link" [routerLink]="['signup']" >Help</a>
+            <a class="nav-link" [routerLink]="['help']" >Help</a>
         </li>
     
       </ul>
       <form class="form-inline my-2 my-lg-2">
         <!-- <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"> -->
-        <button class="btn btn-success mr-sm-2  " type="submit" [routerLink]="['login']">Login</button>
-        <button class="btn btn-info my-2 my-sm-0 " type="submit" [routerLink]="['signup']" >Sign Up</button>
+        <a class="btn btn-success mr-sm-2  "  [routerLink]="['login']">Login</a>
+        <a class="btn btn-info my-2 my-sm-0 "  [routerLink]="['signup']" >Sign Up</a>
       </form>
     </div>
   </nav>

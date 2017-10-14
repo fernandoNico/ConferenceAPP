@@ -8,8 +8,10 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponentComponent  {
   title = 'MyEvent';
+  constructor(private router: Router) {}
 
-  constructor(private router: Router) {
+  gotoEvents() {
+    this.router.navigate(['events']);
   }
 
   goHome() {
@@ -23,5 +25,8 @@ export class HeaderComponentComponent  {
   goLogin() {
       this.router.navigate(['login']);
   }
-
+  goHelp() {
+    this.router.navigate(['help']);
+  }
+  
 }

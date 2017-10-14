@@ -1,6 +1,5 @@
-
   <br>
-  <div  class="container text-center size"> <br>
+  <div  class="container text-center "> 
   <h1 class=""> Welcome to MyEvent Site</h1>
 
   <div class="row">
@@ -15,7 +14,6 @@
       </div>
     </div>
     <br>
-
-    <button type="button" class="btn btn-warning btn-lg">Get Started</button> 
-    <!-- <button type="button" class="btn btn-primary btn-lg">See Upcoming Events</button> -->
+    <!-- <a  class="btn btn-warning btn-lg" [routerLink]="['current_events']" >Get Started</a>  -->
+    <a class="btn btn-warning btn-lg"  [routerLinkActive]="['active']" [routerLink]="['/events']">Get Started</a>
 </div>
