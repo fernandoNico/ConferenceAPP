@@ -4,6 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { Routes, RouterModule, Router, ActivatedRoute  } from '@angular/router';
 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+
 import { AppComponent } from './app.component';
 import { HomeComponentComponent } from './home-component/home-component.component';
 import { HeaderComponentComponent } from './header-component/header-component.component';
@@ -11,6 +14,8 @@ import { LoginComponentComponent } from './login-component/login-component.compo
 import { SignupComponentComponent } from './signup-component/signup-component.component';
 import { HelpComponentComponent } from './help-component/help-component.component';
 import { EventsComponent } from './events/events.component';
+import { CreateEventComponent } from './create-event/create-event.component';
+import { EditEventComponent } from './edit-event/edit-event.component';
 
 const routes: Routes = [
   { path: 'signup', component: SignupComponentComponent },
@@ -18,6 +23,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponentComponent },
   { path: 'help', component: HelpComponentComponent },
   { path: 'events', component: EventsComponent },
+  { path: 'create', component: CreateEventComponent },
   { path: '**', component: HomeComponentComponent },
 ];
 
@@ -31,10 +37,12 @@ const routes: Routes = [
     SignupComponentComponent,
     LoginComponentComponent,
     HelpComponentComponent,
-    EventsComponent
+    EventsComponent,
+    CreateEventComponent,
+    EditEventComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule, NgbModule.forRoot(), FormsModule,
     RouterModule.forRoot(routes, { useHash: true })
   ],
   providers: [],

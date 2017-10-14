@@ -28,5 +28,4 @@ export class HeaderComponentComponent  {
   goHelp() {
     this.router.navigate(['help']);
   }
-  
 }
