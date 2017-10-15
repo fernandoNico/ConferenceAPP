@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ApplicationRef } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
@@ -20,6 +20,9 @@ import { Http, HttpModule} from '@angular/http';
 
 import { EventServiceService } from './event-service.service';
 
+import { AgmCoreModule } from '@agm/core';
+import { CommonModule } from '@angular/common';
+
 const routes: Routes = [
   { path: 'signup', component: SignupComponentComponent },
   { path: 'login', component: LoginComponentComponent },
@@ -31,7 +34,6 @@ const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: '**', component: HomeComponentComponent },
 ];
-
 
 
 @NgModule({
@@ -47,8 +49,10 @@ const routes: Routes = [
     EditEventComponent
   ],
   imports: [
-    BrowserModule, NgbModule.forRoot(), FormsModule, HttpModule,
-    RouterModule.forRoot(routes, { useHash: true })
+    BrowserModule, NgbModule.forRoot(), FormsModule, HttpModule, CommonModule,
+    RouterModule.forRoot(routes, { useHash: true }), AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCA20_4EESP91_VCovXIqtbMWrRjWnuD8g'
+    })
   ],
   providers: [EventServiceService],
   bootstrap: [AppComponent]

@@ -1,103 +1,189 @@
 <div  class="container text-center">
-    <br>
-    <h1>Edit Event</h1>
-    <br>
-    <form id="wrapper">
-  
-      <div class="form-row" *ngIf="eventEdit">
-       <div *ngFor="let event_info of eventEdit">
-          <div class="form-group col-md-12">
-            <h2>{{event_info.name}}</h2>
-              <label for="inputEmail4" class="col-form-label">Event Ttile</label>
-             
-              <input type="text" class="form-control" name="username"   id="inputEmail4" value="{{event_info.name}}" required>
-          </div>
-          
-          <div class="form-group col-md-12">
-              <h5>Location:</h5>
-              <label for="inputEmail4" class="col-form-label">House Name or Number</label>
-              <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Event/Conference title" required>
-          </div>
 
-          <div class="form-group col-md-12">
-              <label for="inputEmail4" class="col-form-label">Postcode</label>
-              <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Event/Conference title" required>
-          </div>
 
-          <div class="form-group col-md-6">
-            <h5>Starts:</h5>
-              <form class="form-inline">
-                  <div class="form-group">
-                    <div class="input-group">
-                      <input class="form-control" placeholder="yyyy-mm-dd"
-                             name="dp" [(ngModel)]="model" ngbDatepicker #start="ngbDatepicker">
-                      <button class="input-group-addon" (click)="start.toggle()" type="button">
-                        <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-                      </button>
-                    </div>
+<div id="wrapper" *ngIf="eventEdit">
+  <h2>Event Information</h2>
+  <br>
+    <ngb-tabset >
+      <ngb-tab>
+        <ng-template ngbTabTitle><b>Exhibitors</b> </ng-template>
+        <ng-template ngbTabContent>
+          <br>
+
+
+
+          <form id="wrapper" *ngIf="eventEdit" >
+
+                    <div class="form-row" *ngFor="let event_info of eventEdit" >
+
+                        <div class="form-group col-md-12">
+                            <h5>Event Title:</h5>
+                            <h2>{{event_info.name}}</h2>
+                            <label for="inputEmail4" class="col-form-label">Event Title</label>
+                            <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Event/Conference title" required>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <h5>Location:</h5>
+                            <label for="inputEmail4" class="col-form-label">Postcode</label>
+                            <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Postcode" required #postcode>
+                            <br>
+                        </div>
+
+                        <div class="form-group col-md-12" *ngIf="AddressList">
+                              <label for="exampleFormControlSelect1">Select Address</label>
+                              <select class="form-control" id="exampleFormControlSelect1"  >
+                                  <option *ngFor="let address of AddressList.addresses">{{address}}</option>
+                                </select>
+
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <button type="submit" name="submit"  (click)="findAddress(postcode.value)" class="btn btn-primary ">Find Address</button>
+                        </div>
+
+                          <div class="w-100"></div>
+
+
+                          <div class="form-group col-md-12" *ngIf="AddressList">
+                              <div class="card">
+                                  <div class="card-body">
+                                      <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
+                                          <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+                                        </agm-map>
+                                  </div>
+                                </div>
+                          </div>
+
+
+                            <div class="w-100"></div>
+                        <div class="form-group col-md-6">
+                          <h5>Starts:</h5>
+                            <form class="form-inline">
+                                <div class="form-group">
+                                  <div class="input-group">
+                                    <input class="form-control" placeholder="yyyy-mm-dd"
+                                           name="dp" [(ngModel)]="model" ngbDatepicker #start="ngbDatepicker">
+                                    <button class="input-group-addon" (click)="start.toggle()" type="button">
+                                      <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                                    </button>
+                                  </div>
+                                </div>
+                              </form>
+                              <br><br>
+                              <hr>
+                              <!-- <pre>Model: {{ model | json }}</pre> -->
+                        </div>
+
+                        <div class="form-group col-md-6">
+                              <ngb-timepicker [(ngModel)]="time" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+                              <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
+                                  Meridian - {{meridian ? "ON" : "OFF"}}
+                              </button> -->
+                              <hr>
+                              <!-- <pre>Selected time: {{time | json}}</pre> -->
+
+
+                        </div>
+
+
+                        <div class="form-group col-md-6">
+                            <h5>Ends:</h5>
+                              <form class="form-inline">
+                                  <div class="form-group">
+                                    <div class="input-group">
+                                      <input class="form-control" placeholder="yyyy-mm-dd"
+                                             name="dp" [(ngModel)]="model_ends" ngbDatepicker #ends="ngbDatepicker">
+                                      <button class="input-group-addon" (click)="ends.toggle()" type="button">
+                                        <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                                      </button>
+                                    </div>
+                                  </div>
+                                </form>
+                                <hr>
+                                <!-- <pre>Model: {{ model_ends | json }}</pre> -->
+                          </div>
+
+                          <div class="form-group col-md-6">
+                                <ngb-timepicker [(ngModel)]="time_ends" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+                                <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
+                                    Meridian - {{meridian ? "ON" : "OFF"}}
+                                </button> -->
+                                <hr>
+                                <!-- <pre>Selected time: {{time_ends | json}}</pre> -->
+
+
+                          </div>
+
+
+
+                          <label for="exampleFormControlTextarea1">Description</label>
+                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+
+
                   </div>
-                </form>
-                <hr>
-                <pre>Model: {{ model | json }}</pre>
-          </div>
-
-          <div class="form-group col-md-6">
-                <ngb-timepicker [(ngModel)]="time" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
-                <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
-                    Meridian - {{meridian ? "ON" : "OFF"}}
-                </button> -->
-                <hr>
-                <pre>Selected time: {{time | json}}</pre>
-                <hr/>
-                
-          </div>
-
-
-          <div class="form-group col-md-6">
-              <h5>Ends:</h5>
-                <form class="form-inline">
-                    <div class="form-group">
-                      <div class="input-group">
-                        <input class="form-control" placeholder="yyyy-mm-dd"
-                               name="dp" [(ngModel)]="model_ends" ngbDatepicker #ends="ngbDatepicker">
-                        <button class="input-group-addon" (click)="ends.toggle()" type="button">
-                          <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-                        </button>
-                      </div>
-                    </div>
+                  <br><br>
+                    <!-- end of form row div -->
+                          <button type="submit" name="submit" class="btn btn-primary btn-lg">Submit</button>
                   </form>
-                  <hr>
-                  <pre>Model: {{ model_ends | json }}</pre>
-            </div>
-  
-            <div class="form-group col-md-6">
-                  <ngb-timepicker [(ngModel)]="time_ends" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
-                  <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
-                      Meridian - {{meridian ? "ON" : "OFF"}}
-                  </button> -->
-                  <hr>
-                  <pre>Selected time: {{time_ends | json}}</pre>
-                  <hr/>
-                  
-            </div>
 
-           
-
-            <label for="exampleFormControlTextarea1">Description</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-
-          </div> 
-    </div> 
-    <br><br>   
-      <!-- end of form row div -->
-            <button type="submit" name="submit" class="btn btn-primary btn-lg">Submit</button>
-    </form>
+                  <br><br>
 
 
-          <div *ngIf="!event">
-            {{statusMessage}}
-          </div>
-    
+
+
+
+
+
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+        <ng-template ngbTabTitle><b>Attendees</b> </ng-template>
+        <ng-template ngbTabContent>
+          <br>
+          Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
+          <p>Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table
+          craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl
+          cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. </p>
+        </ng-template>
+      </ngb-tab>
+      <!-- [disabled]="true" -->
+      <ngb-tab>
+        <ng-template ngbTabTitle><b>Event Schedule</b> </ng-template>
+        <ng-template ngbTabContent>
+          <br>
+          <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
+          Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean
+          shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero
+          sint qui sapiente accusamus tattooed echo park.</p>
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+          <ng-template ngbTabTitle><b>Speakers</b> </ng-template>
+          <ng-template ngbTabContent>
+            <br>
+            <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid.
+            Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean
+            shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero
+            sint qui sapiente accusamus tattooed echo park.</p>
+          </ng-template>
+        </ngb-tab>
+    </ngb-tabset>
+
+  </div>
+
+
+
+
+
+
+
+
     </div>
-  
+
+
     <br><br>
+
+
+
+

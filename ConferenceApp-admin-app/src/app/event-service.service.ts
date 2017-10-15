@@ -9,7 +9,7 @@ import { Event } from './events/event.model';
 
 @Injectable()
 export class EventServiceService {
-
+  apiKey = 'mIWLWu8C_kG3okPgVRzQng10675';
   constructor(private http: Http) {}
 
   getEvents() {
@@ -22,6 +22,15 @@ export class EventServiceService {
     .map((response: Response) => <Event>response.json()).catch(this.handleError);
   }
 
+  getEventPostcode(postcode: string) {
+    return this.http.get('https://api.getAddress.io/find/' + postcode + '?api-key=' + this.apiKey)
+    .map((res: Response) => res.json()).catch(this.handleError);
+  }
+
+
+
+
+  //////////
   handleError(error: Response) {
     console.error(error);
     return Observable.throw(error);

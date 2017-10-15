@@ -1,6 +1,11 @@
-h4{
-    text-align: left;
+#wrapper {
+  width: 100%;
+  /* max-width: 800px; */
+  margin: 0 auto;
+  padding: 30px  30px;
+  background-color: white;
+  text-align: left;
 }
-#help{
-    border-color: white;
+h1,h2,h3,h4,h5,h6{
+  color: black;
 }
