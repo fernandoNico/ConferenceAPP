@@ -14,14 +14,18 @@ export class EventServiceService {
 
   getEvents() {
     return this.http.get(('https://sheetsu.com/apis/v1.0/c081ec92ea8d'))
-    .map((res: Response) => res.json());
+    .map((res: Response) => res.json()).catch(this.handleError);
   }
 
-  getEventById(id: number): Observable<Event> {
+  getEventById(id: string): Observable<Event> {
     return this.http.get('https://sheetsu.com/apis/v1.0/c081ec92ea8d/search?id=' + id )
-    .map((response: Response) => <Event>response.json());
+    .map((response: Response) => <Event>response.json()).catch(this.handleError);
   }
 
+  handleError(error: Response) {
+    console.error(error);
+    return Observable.throw(error);
+  }
 
 
 

@@ -12,21 +12,33 @@ import { EventServiceService } from '../event-service.service';
 
 
 export class EditEventComponent implements OnInit {
-  info: Event;
+  eventEdit: Event;
   tile: string;
   statusMessage: string;
 
   constructor(private eventService: EventServiceService, private activatedRoute: ActivatedRoute ) { }
 
   ngOnInit() {
-    const eventId: number = this.activatedRoute.snapshot.params['id'];
+    const eventId: string = this.activatedRoute.snapshot.params['id'];
 
     this.eventService.getEventById(eventId).subscribe(
-      (eventData) => this.info =  eventData,
+      (eventData) => {
+        if (eventData == null) {
+          this.statusMessage = 'Event with given id does not exits' ;
+        }else {}
+        this.eventEdit =  eventData;
+        console.log(this.eventEdit);
+        this.tile =  this.eventEdit.name;
+        console.log(this.tile);
+      },
+      (error) => {
+        this.statusMessage = 'Problem with the service';
+        console.log(error);
+      }
     );
 
-    this.tile =  this.info.name;
-    console.log(this.tile);
+    // this.tile =  this.eventEdit.name;
+    
   }
 
 }
