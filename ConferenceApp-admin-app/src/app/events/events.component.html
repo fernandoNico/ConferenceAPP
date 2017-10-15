@@ -17,93 +17,23 @@
 </div>
 <hr>
 
-
-    <div class="card-columns">
+<div class="card-columns">
+        <div *ngFor="let event of events">
                 <div class="card" >
-                        <img class="card-img-top" src="./assets/ford.jpg" alt="Card image cap">
+                        <img class="card-img-top" src={{event.image}} alt="Card image cap">
                         <div class="card-body">
-                        <h5 class="card-title">Croydon Conference</h5>
-                        <small><span class="badge badge-info">FRI, 27 OCT 18:00 PM</span></small>
+                        <h5 class="card-title">{{event.name}}</h5>
+                        <small><span class="badge badge-info">{{event.date}}</span></small>
                         <br><br>
-                        <h6><span class="badge badge-light">Boxpark London, Croydon</span></h6>
+                        <h6><span class="badge badge-light">{{event.location}}</span></h6>
                         </div>
                         <div class="card-footer ">
-                                <a href="#" class="btn btn-warning btn-sm">Edit </a>
+                                <a href="#" class="btn btn-warning btn-sm" [routerLink]="['/event', event.id]" >Edit </a>
                                 <a href="#" class="btn btn-danger btn-sm">Delete </a>
                         </div>
-                </div>
-
-                <div class="card" >
-                        <img class="card-img-top" src="./assets/cello.jpg" alt="Card image cap">
-                        <div class="card-body">
-                        <h5 class="card-title">Croydon Conference</h5>
-                        <small><span class="badge badge-info">FRI, 27 OCT 18:00 PM</span></small>
-                        <br><br>
-                        <h6><span class="badge badge-light">Boxpark London, Croydon</span></h6>
-                        </div>
-                        <div class="card-footer ">
-                                        <a href="#" class="btn btn-warning btn-sm">Edit </a>
-                                        <a href="#" class="btn btn-danger btn-sm">Delete </a>
-                        </div>
-                </div>
-
-                <div class="card" >
-                        <img class="card-img-top" src="./assets/ford.jpg" alt="Card image cap">
-                        <div class="card-body">
-                        <h5 class="card-title">Croydon Conference</h5>
-                        <small><span class="badge badge-info">FRI, 27 OCT 18:00 PM</span></small>
-                        <br><br>
-                        <h6><span class="badge badge-light">Boxpark London, Croydon</span></h6>
-                        </div>
-                        <div class="card-footer ">
-                                        <a href="#" class="btn btn-warning btn-sm">Edit </a>
-                                        <a href="#" class="btn btn-danger btn-sm">Delete </a>
-                        </div>
-                </div>
-
-                <div class="card" >
-                        <img class="card-img-top" src="./assets/laptop.jpg"alt="Card image cap">
-                        <div class="card-body">
-                        <h5 class="card-title">Croydon Conference</h5>
-                        <small><span class="badge badge-info">FRI, 27 OCT 18:00 PM</span></small>
-                        <br><br>
-                        <h6><span class="badge badge-light">Boxpark London, Croydon</span></h6>
-                        </div>
-                        <div class="card-footer ">
-                                        <a href="#" class="btn btn-warning btn-sm">Edit </a>
-                                        <a href="#" class="btn btn-danger btn-sm">Delete </a>
-                        </div>
-                </div>
-
-                <div class="card" >
-                        <img class="card-img-top" src="./assets/laptop.jpg" alt="Card image cap">
-                        <div class="card-body">
-                        <h5 class="card-title">Croydon Conference</h5>
-                        <small><span class="badge badge-info">FRI, 27 OCT 18:00 PM</span></small>
-                        <br><br>
-                        <h6><span class="badge badge-light">Boxpark London, Croydon</span></h6>
-                        </div>
-                        <div class="card-footer ">
-                                        <a href="#" class="btn btn-warning btn-sm">Edit </a>
-                                        <a href="#" class="btn btn-danger btn-sm">Delete </a>
-                        </div>
-                </div>
-
-                <div class="card" >
-                        <img class="card-img-top" src="./assets/sculpture.jpg"  alt="Card image cap">
-                        <div class="card-body">
-                        <h5 class="card-title">Croydon Conference</h5>
-                        <small><span class="badge badge-info">FRI, 27 OCT 18:00 PM</span></small>
-                        <br><br>
-                        <h6><span class="badge badge-light">Boxpark London, Croydon</span></h6>
-                        </div>
-                        <div class="card-footer ">
-                                        <a href="#" class="btn btn-warning btn-sm">Edit </a>
-                                        <a href="#" class="btn btn-danger btn-sm">Delete </a>
-                        </div>
-                </div>
-                
+                </div>      
         </div>
+</div>
 </div>
 <br>
 <br>

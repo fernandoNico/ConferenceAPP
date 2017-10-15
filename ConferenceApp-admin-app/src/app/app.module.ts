@@ -16,6 +16,9 @@ import { HelpComponentComponent } from './help-component/help-component.componen
 import { EventsComponent } from './events/events.component';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { EditEventComponent } from './edit-event/edit-event.component';
+import { Http, HttpModule} from '@angular/http';
+
+import { EventServiceService } from './event-service.service';
 
 const routes: Routes = [
   { path: 'signup', component: SignupComponentComponent },
@@ -24,6 +27,8 @@ const routes: Routes = [
   { path: 'help', component: HelpComponentComponent },
   { path: 'events', component: EventsComponent },
   { path: 'create', component: CreateEventComponent },
+  { path: 'event/:id', component: EditEventComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: '**', component: HomeComponentComponent },
 ];
 
@@ -42,10 +47,10 @@ const routes: Routes = [
     EditEventComponent
   ],
   imports: [
-    BrowserModule, NgbModule.forRoot(), FormsModule,
+    BrowserModule, NgbModule.forRoot(), FormsModule, HttpModule,
     RouterModule.forRoot(routes, { useHash: true })
   ],
-  providers: [],
+  providers: [EventServiceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
