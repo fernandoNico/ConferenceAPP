@@ -16,6 +16,12 @@ export class EditEventComponent implements OnInit {
   statusMessage: string;
   AddressList: any;
 
+  showEventTab: boolean = false;
+  showExhibitorsTab: boolean = false;
+  showAttendeesTab: boolean = false;
+  showSpeakersab: boolean = false;
+
+
 
   // Map variables
   lat: number;
