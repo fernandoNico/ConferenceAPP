@@ -1,0 +1,32 @@
+<form *ngIf="speaker" >
+  <p>Edit Form</p>
+    <div class="form-row">
+        <div class="form-group col-md-10">
+            <label for="inputEmail4" class="col-form-label">Name</label>
+            <input type="text" class="form-control"  [(ngModel)]="speaker.name"  name="first"id="inputEmail4" placeholder="Enter User Name" required #name>
+        </div>
+        <div class="form-group col-md-10">
+            <label for="inputEmail4" class="col-form-label">Surname</label>
+            <input type="text" class="form-control"   [(ngModel)]="speaker.surname" name="surname" id="inputEmail4" placeholder="Enter Surname" required>
+        </div>
+        <div class="form-group col-md-10">
+            <label for="inputEmail4" class="col-form-label">email</label>
+            <input type="text" class="form-control"  [(ngModel)]="speaker.email" name="email" id="inputEmail4" placeholder="Enter email" required #email>
+        </div>
+        <div class="form-group col-md-10">
+            <label for="exampleFormControlSelect1">Select Scheduled Event</label>
+            <select class="form-control" id="exampleFormControlSelect1">
+              <option>{{speaker.eventName}}</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-10">
+            <label for="exampleFormControlSelect1">Select Industry</label>
+            <select class="form-control" id="exampleFormControlSelect1">
+              <option>{{speaker.speakerIndustry}}</option>
+            </select>
+        </div>
+    </div>
+<!-- <button type="submit" name="submit"(click)="showAttendeesTab = !showAttendeesTab"  class="btn btn-primary btn-sm">Submit</button> -->
+          <button type="submit" name="submit"  class="btn btn-primary btn-sm">Confirm Changes</button>
+  </form>

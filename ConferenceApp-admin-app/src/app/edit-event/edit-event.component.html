@@ -6,45 +6,39 @@
 <!-- Event Details Tab *****************************************************************************************************-->
       <ngb-tab>
         <ng-template ngbTabTitle><b>Event Details</b> </ng-template>
-        <ng-template ngbTabContent>
+          <ng-template ngbTabContent>
           <br>
-
-
-
           <form  *ngIf="eventEdit" >
-
-                    <div class="form-row" *ngFor="let event_info of eventEdit" >
-
-                        <div class="form-group col-md-12">
+                <div class="form-row" *ngFor="let event_info of eventEdit" >
+                      <div class="form-group col-md-12">
                             <h5>Event Title:</h5>
                             <h2>{{event_info.name}}</h2>
                             <label for="inputEmail4" class="col-form-label">Event Title</label>
                             <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Event/Conference title" required>
-                        </div>
+                      </div>
 
-                        <div class="form-group col-md-6">
+                      <div class="form-group col-md-6">
                             <h5>Location:</h5>
                             <label for="inputEmail4" class="col-form-label">Postcode</label>
                             <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Postcode" required #postcode>
                             <br>
-                        </div>
+                      </div>
 
-                        <div class="form-group col-md-12" *ngIf="AddressList">
+                      <div class="form-group col-md-12" *ngIf="AddressList">
                               <label for="exampleFormControlSelect1">Select Address</label>
                               <select class="form-control" id="exampleFormControlSelect1"  >
                                   <option *ngFor="let address of AddressList.addresses">{{address}}</option>
                                 </select>
+                      </div>
 
-                        </div>
+                      <div class="form-group col-md-12">
+                            <!-- <button type="submit" name="submit"  (click)="findAddress(postcode.value)" class="btn btn-primary ">Find Address</button> -->
+                      </div>
 
-                        <div class="form-group col-md-12">
-                            <button type="submit" name="submit"  (click)="findAddress(postcode.value)" class="btn btn-primary ">Find Address</button>
-                        </div>
-
-                          <div class="w-100"></div>
+                      <div class="w-100"></div>
 
 
-                          <div class="form-group col-md-12" *ngIf="AddressList">
+                      <div class="form-group col-md-12" *ngIf="AddressList">
                               <div class="card">
                                   <div class="card-body">
                                       <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
@@ -52,11 +46,11 @@
                                         </agm-map>
                                   </div>
                                 </div>
-                          </div>
+                      </div>
 
+                      <div class="w-100"></div>
 
-                            <div class="w-100"></div>
-                        <div class="form-group col-md-6">
+                      <div class="form-group col-md-6">
                           <h5>Starts:</h5>
                             <form class="form-inline">
                                 <div class="form-group">
@@ -70,23 +64,18 @@
                                 </div>
                               </form>
                               <br><br>
-
                               <!-- <pre>Model: {{ model | json }}</pre> -->
-                        </div>
+                      </div>
 
-                        <div class="form-group col-md-6">
+                      <div class="form-group col-md-6">
                               <ngb-timepicker [(ngModel)]="time" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
                               <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                                   Meridian - {{meridian ? "ON" : "OFF"}}
                               </button> -->
-
                               <!-- <pre>Selected time: {{time | json}}</pre> -->
+                      </div>
 
-
-                        </div>
-
-
-                        <div class="form-group col-md-6">
+                      <div class="form-group col-md-6">
                             <h5>Ends:</h5>
                               <form class="form-inline">
                                   <div class="form-group">
@@ -99,43 +88,29 @@
                                     </div>
                                   </div>
                                 </form>
-
                                 <!-- <pre>Model: {{ model_ends | json }}</pre> -->
-                          </div>
+                      </div>
 
-                          <div class="form-group col-md-6">
+                      <div class="form-group col-md-6">
                                 <ngb-timepicker [(ngModel)]="time_ends" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
                                 <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                                     Meridian - {{meridian ? "ON" : "OFF"}}
                                 </button> -->
-
                                 <!-- <pre>Selected time: {{time_ends | json}}</pre> -->
-
-
-                          </div>
-
-
+                      </div>
 
                           <label for="exampleFormControlTextarea1">Description</label>
                           <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
 
-
-                  </div>
+                </div>
                   <br><br>
                     <!-- end of form row div -->
-                          <button type="submit" name="submit" class="btn btn-primary btn-lg">Submit</button>
-                  </form>
-
-                  <br><br>
-
-
-
-
-
-
-
+                          <!-- <button type="submit" name="submit" class="btn btn-primary btn-lg">Submit</button> -->
+          </form>
+          <br><br>
         </ng-template>
       </ngb-tab>
+
 <!-- Event Schedule Tab *****************************************************************************************************-->
       <ngb-tab>
           <ng-template ngbTabTitle><b>Event Schedule</b> </ng-template>
@@ -230,7 +205,7 @@
                                   </div>
                                   <br><br>
                                     <!-- end of form row div -->
-                                          <button type="submit" name="submit" (click)="showEventTab = !showEventTab" class="btn btn-primary btn-lg">Submit</button>
+                                          <!-- <button type="submit" name="submit" (click)="showEventTab = !showEventTab" class="btn btn-primary btn-lg">Submit</button> -->
                                   </form>
                           </div>
 
@@ -284,55 +259,61 @@
                           <div class="form-row">
                               <div class="form-group col-md-10">
                                   <label for="inputEmail4" class="col-form-label">Exhibitor Name</label>
-                                  <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter User Name" required>
+                                  <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter User Name" required #exhibitorName>
                               </div>
                               <div class="form-group col-md-10">
                                   <label for="inputEmail4" class="col-form-label">Exhibitor Rep</label>
-                                  <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Surname" required>
+                                  <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Surname" required #exhibitorRep>
+                              </div>
+
+                              <div class="form-group col-md-10">
+                                  <label for="inputEmail4" class="col-form-label">Email</label>
+                                  <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Surname" required #exhibitorEmail>
+                              </div>
+
+                              <div class="form-group col-md-10">
+                                  <label for="exampleFormControlSelect1">Select Event</label>
+                                  <select class="form-control" id="exampleFormControlSelect1" #exhibitorEvent>
+                                    <option>Workshop 1</option>
+                                    <option>Workshop 2</option>
+                                  </select>
                               </div>
 
                               <div class="form-group col-md-10">
                                   <label for="exampleFormControlSelect1">Select Industry Sector</label>
-                                  <select class="form-control" id="exampleFormControlSelect1">
+                                  <select class="form-control" id="exampleFormControlSelect1" #exhibitorIndustry>
                                     <option>ICT</option>
                                     <option>Business</option>
                                   </select>
                               </div>
 
                               <div class="form-group col-md-10">
-                                  <label for="exampleFormControlTextarea1">Description</label>
-                                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                  <label for="exampleFormControlTextarea1">What we do</label>
+                                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" #exhibitorDesc></textarea>
                               </div>
 
                           </div>
-                                <button type="submit" name="submit" (click)="showExhibitorsTab = !showExhibitorsTab" class="btn btn-primary btn-sm">Submit</button>
+                                <button type="submit" name="submit" (click)=" addExhibitor(exhibitorName.value, exhibitorDesc.value , exhibitorEmail.value ,exhibitorRep.value, exhibitorIndustry.value, exhibitorEvent.value)" class="btn btn-primary btn-sm">Submit</button>
                         </form>
 
+                        <app-edit-exhibitor-form [exhibitor]="SelectedExhibitor" ></app-edit-exhibitor-form>
 
                   </div>
                   <div class="col-sm-7">
 
                       <h5>Exhibitors registered </h5>
                       <br>
-                      <div class="card" >
+                      <div class="card" *ngFor="let exhibitor of ExhibitorsList" >
                           <div class="card-body">
-                              <h4 class="card-title">Oracle </h4>
-                              <h5> ICT 1</h5>
-                              <h6 class="card-subtitle mb-2 text-muted">Fernando</h6>
-                              <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                              <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                              <h4 class="card-title">{{exhibitor.name}}</h4>
+                              <h5>{{exhibitor.exhibitorIndustry}}</h5>
+                              <h6 class="card-subtitle mb-2 text-muted">{{exhibitor.exhibitorRepName}}</h6>
+                              <p>{{exhibitor.description}}</p>
+                              <a class="btn btn-warning btn-sm" (click)=" EditExhibitor(exhibitor)"> Edit</a>
+                              <a  class="btn btn-danger btn-sm"  (click)=" deleteExhibitor(exhibitor)" >Delete</a>
                             </div>
                         </div>
                         <br>
-                        <div class="card" >
-                            <div class="card-body">
-                                <h4 class="card-title">Trade Tech INC </h4>
-                                <h5> Businees </h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Laura Shawn</h6>
-                                <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                              </div>
-                          </div>
                           <br>
 
                   </div>
@@ -360,72 +341,60 @@
 
 
 <!-- Event Attendees Tab *****************************************************************************************************-->
-      <ngb-tab>
+    <ngb-tab>
         <ng-template ngbTabTitle><b>Attendees</b> </ng-template>
-        <ng-template ngbTabContent>
-          <br>
-          <h1> Add & See the event Attendees registered </h1>
+          <ng-template ngbTabContent>
+            <br>
+            <h1> Add & See the event Attendees registered </h1>
+            <hr>
+              <div class="row">
 
-          <hr>
-          <div class="row">
+                    <div class="col-sm-5">
+                      <h5>Add <button type="submit" name="submit" (click)="showAttendeesTab = !showAttendeesTab" class="btn btn-warning btn-sm">+</button></h5>
+                          <form *ngIf="showAttendeesTab" >
+                            <div class="form-row">
+                                <div class="form-group col-md-10">
+                                    <label for="inputEmail4" class="col-form-label">Name</label>
+                                    <input type="text" class="form-control"   id="inputEmail4" placeholder="Enter User Name" required #name>
+                                </div>
+                                <div class="form-group col-md-10">
+                                    <label for="inputEmail4" class="col-form-label">Surname</label>
+                                    <input type="text" class="form-control"    id="inputEmail4" placeholder="Enter Surname" required #surname >
+                                </div>
+                                <div class="form-group col-md-10">
+                                    <label for="inputEmail4" class="col-form-label">email</label>
+                                    <input type="text" class="form-control"   id="inputEmail4" placeholder="Enter email" required #email>
+                                </div>
+                                <div class="form-group col-md-10">
+                                    <label for="inputPassword4" class="col-form-label">Password</label>
+                                    <input type="password" class="form-control"   id="inputPassword4" placeholder=" Enter Password" required>
+                                </div>
+                            </div>
+                        <!-- <button type="submit" name="submit"(click)="showAttendeesTab = !showAttendeesTab"  class="btn btn-primary btn-sm">Submit</button> -->
+                                  <button type="submit" name="submit" (click)="addAttende(name.value, surname.value, email.value)"  class="btn btn-primary btn-sm">Submit</button>
+                          <br>
+                          <hr>
+                                </form>
 
-              <div class="col-sm-5">
-
-                <h5>Add <button type="submit" name="submit" (click)="showAttendeesTab = !showAttendeesTab" class="btn btn-warning btn-sm">+</button></h5>
-
-                  <form *ngIf="showAttendeesTab" >
-                      <div class="form-row">
-                          <div class="form-group col-md-10">
-                              <label for="inputEmail4" class="col-form-label">Name</label>
-                              <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter User Name" required>
-                          </div>
-                          <div class="form-group col-md-10">
-                              <label for="inputEmail4" class="col-form-label">Surname</label>
-                              <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Surname" required>
-                          </div>
-                          <div class="form-group col-md-10">
-                              <label for="inputEmail4" class="col-form-label">email</label>
-                              <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter email" required>
-                          </div>
-                          <div class="form-group col-md-10">
-                              <label for="inputPassword4" class="col-form-label">Password</label>
-                              <input type="password" class="form-control" name="password"  id="inputPassword4" placeholder=" Enter Password" required>
-                          </div>
-
-                      </div>
-                            <button type="submit" name="submit"(click)="showAttendeesTab = !showAttendeesTab"  class="btn btn-primary btn-sm">Submit</button>
-                    </form>
-
-
-              </div>
-              <div class="col-sm-7">
-
-                  <h5>Attendees registered </h5>
-                  <br>
-                  <div class="card" >
-                      <div class="card-body">
-                          <h4 class="card-title">Fernando Nicolalde</h4>
-                          <h6 class="card-subtitle mb-2 text-muted">nicolalde3006@gmail.com</h6>
-                          <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                          <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                        </div>
+                          <app-edit-attende-form [attendee]="SelectedAttende" ></app-edit-attende-form>
                     </div>
-                    <br>
-                    <div class="card" >
-                        <div class="card-body">
-                          <h4 class="card-title">Fernando Nicolalde</h4>
-                          <h6 class="card-subtitle mb-2 text-muted">nicolalde3006@gmail.com</h6>
-                          <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                          <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                        </div>
-                      </div>
-                      <br>
 
-              </div>
+                    <div class="col-sm-7" *ngIf="AttendeesList">
+                         <h5>Attendees registered </h5>
+                          <br>
+                          <div class="card" *ngFor="let attende of AttendeesList" >
+                            <div class="card-body">
+                                <h4 class="card-title" >{{attende.name}} {{attende.surname}}</h4>
+                                <h6 class="card-subtitle mb-2 text-muted">{{attende.email}}</h6>
+                                <a  class="btn btn-warning btn-sm" (click)="EditAttendee(attende)">edit</a>
+                                <a class="btn btn-danger  btn-sm"  (click)="delete(attende)" >Delete</a>
+                              </div>
+                          </div>
+                    </div>
 
           </div>
         </ng-template>
-      </ngb-tab>
+    </ngb-tab>
 <!-- Event Speakers Tab *****************************************************************************************************-->
       <ngb-tab>
           <ng-template ngbTabTitle><b>Speakers</b> </ng-template>
@@ -444,24 +413,20 @@
                           <div class="form-row">
                               <div class="form-group col-md-10">
                                   <label for="inputEmail4" class="col-form-label">Name</label>
-                                  <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter User Name" required>
+                                  <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter User Name" required #speakerName>
                               </div>
                               <div class="form-group col-md-10">
                                   <label for="inputEmail4" class="col-form-label">Surname</label>
-                                  <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Surname" required>
+                                  <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Surname" required #speakerSurname>
                               </div>
                               <div class="form-group col-md-10">
                                   <label for="inputEmail4" class="col-form-label">email</label>
-                                  <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter email" required>
-                              </div>
-                              <div class="form-group col-md-10">
-                                  <label for="inputPassword4" class="col-form-label">Password</label>
-                                  <input type="password" class="form-control" name="password"  id="inputPassword4" placeholder=" Enter Password" required>
+                                  <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter email" required #speakerEmail >
                               </div>
 
                               <div class="form-group col-md-10">
                                   <label for="exampleFormControlSelect1">Select Industry Sector</label>
-                                  <select class="form-control" id="exampleFormControlSelect1">
+                                  <select class="form-control" id="exampleFormControlSelect1" #speakerIndustry>
                                     <option>ICT</option>
                                     <option>Business</option>
                                   </select>
@@ -469,7 +434,7 @@
 
                               <div class="form-group col-md-10">
                                   <label for="exampleFormControlSelect1">Select Scheduled Event</label>
-                                  <select class="form-control" id="exampleFormControlSelect1">
+                                  <select class="form-control" id="exampleFormControlSelect1" #speakerEvent>
                                     <option>Workshop 1</option>
                                     <option>Workshop 2</option>
                                   </select>
@@ -477,36 +442,27 @@
 
 
                           </div>
-                                <button type="submit" name="submit" (click)="showSpeakersab = !showSpeakersab" class="btn btn-primary btn-sm">Submit</button>
+                  <button type="submit" name="submit" (click)="addSpeaker(speakerName.value, speakerSurname.value, speakerEmail.value , speakerEvent.value, speakerIndustry.value)" class="btn btn-primary btn-sm">Submit</button>
                         </form>
 
-
+                        <app-edit-speaker-form [speaker]="SelectedSpeaker"> </app-edit-speaker-form>
                   </div>
                   <div class="col-sm-7">
 
                       <h5>Speakers registered </h5>
                       <br>
-                      <div class="card" >
+                      <div class="card" *ngFor="let speaker of SpeakerList" >
                           <div class="card-body">
-                              <h4> <span class="badge badge-secondary">Workshop 1</span> </h4>
-                              <h5 class="card-title">Fernando Nicolalde  </h5>
-                              <h6 class="card-subtitle mb-2 text-muted">nicolalde3006@gmail.com</h6>
-
-                              <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                              <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                              <h4> <span class="badge badge-secondary">{{speaker.eventName}}</span> </h4>
+                              <h5 class="card-title">{{speaker.name}} {{speaker.surname}}</h5>
+                              <h6 class="card-subtitle mb-2 text-muted">{{speaker.email}}</h6>
+                              <p>{{speaker.speakerIndustry}}</p>
+                              <a  class="btn btn-warning btn-sm" (click)="EditSpeaker(speaker)">edit</a>
+                              <a class="btn btn-danger  btn-sm"  (click)="deleteSpeaker(speaker)" >Delete</a>
                             </div>
                         </div>
                         <br>
-                        <div class="card" >
-                            <div class="card-body">
-                                <h4> <span class="badge badge-secondary">Workshop 2</span> </h4>
-                                <h5 class="card-title">Fernando Nicolalde  </h5>
-                                <h6 class="card-subtitle mb-2 text-muted">nicolalde3006@gmail.com</h6>
 
-                                <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                              </div>
-                          </div>
                           <br>
 
                   </div>

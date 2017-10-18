@@ -22,6 +22,12 @@ import { EventServiceService } from './event-service.service';
 
 import { AgmCoreModule } from '@agm/core';
 import { CommonModule } from '@angular/common';
+import { EditFormComponent } from './edit-event/edit-Attende/edit-attendee.component';
+import { Speaker } from './edit-event/edit-speakers/Speaker.model';
+import { SpeakerFormComponent } from './edit-event/edit-speakers/edit-speaker.component';
+import { ExhibitorFormComponent } from './edit-event/edit-exhibitors/edit-exhibitor.component';
+
+
 
 const routes: Routes = [
   { path: 'signup', component: SignupComponentComponent },
@@ -46,7 +52,10 @@ const routes: Routes = [
     HelpComponentComponent,
     EventsComponent,
     CreateEventComponent,
-    EditEventComponent
+    EditEventComponent,
+    EditFormComponent,
+    SpeakerFormComponent,
+    ExhibitorFormComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule, HttpModule, CommonModule,

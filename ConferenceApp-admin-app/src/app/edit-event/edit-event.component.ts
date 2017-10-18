@@ -2,6 +2,11 @@ import { Component, OnInit, Injectable  } from '@angular/core';
 import { Event } from '../events/event.model';
 import { ActivatedRoute } from '@angular/router';
 import { EventServiceService } from '../event-service.service';
+import { Attendee } from './edit-Attende/Attendee.model';
+import { EditFormComponent } from './edit-Attende/edit-attendee.component';
+import { Speaker } from './edit-speakers/Speaker.model';
+import { Exhibitor } from './edit-exhibitors/Exhibitor.model';
+
 
 
 @Component({
@@ -12,21 +17,14 @@ import { EventServiceService } from '../event-service.service';
 
 
 export class EditEventComponent implements OnInit {
-  eventEdit: Event;
-  statusMessage: string;
-  AddressList: any;
+  showEventTab = false;
+  showExhibitorsTab = false;
+  showAttendeesTab = false;
+  showSpeakersab = false;
 
-  showEventTab: boolean = false;
-  showExhibitorsTab: boolean = false;
-  showAttendeesTab: boolean = false;
-  showSpeakersab: boolean = false;
-
-
-
-  // Map variables
   lat: number;
   lng: number ;
-  zoom: number = 15;
+  zoom = 15;
 
   // Date Variables
   model;
@@ -34,17 +32,105 @@ export class EditEventComponent implements OnInit {
   time = {hour: 13, minute: 30};
   time_ends = {hour: 12, minute: 20};
   meridian = true;
+
+  eventEdit: Event;
+  statusMessage: string;
+  AddressList: any;
+
+  // Variable Declarations
+  SpeakerList: Speaker[];
+  SelectedSpeaker: Speaker;
+
+  AttendeesList: Attendee[];
+  SelectedAttende: Attendee;
+
+  ExhibitorsList: Exhibitor[];
+  SelectedExhibitor: Exhibitor;
+
+
+
+  // Speakers code
+
+  EditExhibitor(exhibitor: Exhibitor) {
+    this.SelectedExhibitor =  exhibitor;
+    if ( this.showExhibitorsTab === true) {
+        this.showExhibitorsTab =  false;
+    }
+  }
+  addExhibitor(name: string, desc: string, email: string , exhibitorRep: string, exhibitorIndustry: string,  exhibitorEvent: ByteString )  {
+      this.ExhibitorsList.unshift( new Exhibitor(name, desc, email,  exhibitorRep, exhibitorIndustry, exhibitorEvent, ));
+    }
+
+  deleteExhibitor(exhibitor: Exhibitor) {
+      let indexToDelete = this.ExhibitorsList.indexOf(exhibitor);
+      if (indexToDelete !== -1) {
+        this.ExhibitorsList.splice(indexToDelete, 1);
+      }
+    }
+
+
+  ////////////////////////////
+
+
+
+
+
+
+
+  // Speakers code
+  EditSpeaker(speaker: Speaker) {
+    this.SelectedSpeaker =  speaker;
+    if ( this.showSpeakersab === true) {
+        this.showSpeakersab =  false;
+    }
+  }
+  addSpeaker(name: string, surname: string, email: string,  event: string , industry: string)  {
+      this.SpeakerList.unshift( new Speaker(name, surname, email, event, industry));
+    }
+  deleteSpeaker(event: Speaker) {
+      let indexToDelete = this.SpeakerList.indexOf(event);
+      if (indexToDelete !== -1) {
+        this.SpeakerList.splice(indexToDelete, 1);
+      }
+    }
+
+
+  ////////////////////////////
+
+  // Attendees code
+  EditAttendee(attende: Attendee) {
+    this.SelectedAttende =  attende;
+    if ( this.showAttendeesTab === true) {
+        this.showAttendeesTab =  false;
+    }
+  }
+  addAttende(name: string, surname: string, email: string)  {
+      this.AttendeesList.unshift( new Attendee(name, surname, email));
+    }
+  delete(event: Attendee) {
+      let indexToDelete = this.AttendeesList.indexOf(event);
+      if (indexToDelete !== -1) {
+        this.AttendeesList.splice(indexToDelete, 1);
+      }
+    }
+
+//////////////////////////////////////
+
+  // Map variables
   toggleMeridian() {
       this.meridian = !this.meridian;
   }
 
-  constructor(private eventService: EventServiceService, private activatedRoute: ActivatedRoute ) { }
+
+  constructor(private eventService: EventServiceService, private activatedRoute: ActivatedRoute ) {
+            this.AttendeesList = []; this.SpeakerList = [] ; this.ExhibitorsList = [];
+   }
 
   ngOnInit() {
     this.getEventtoEdit();
   }
 ///////
-  getEventtoEdit(){
+  getEventtoEdit() {
     const eventId: string = this.activatedRoute.snapshot.params['id'];
     this.eventService.getEventById(eventId).subscribe(
       (eventData) => {

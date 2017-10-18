@@ -46,7 +46,7 @@
 
 
               <div class="w-100"></div>
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-4">
             <h5>Starts:</h5>
               <form class="form-inline">
                   <div class="form-group">
@@ -59,23 +59,23 @@
                     </div>
                   </div>
                 </form>
-                <hr>
+
                 <!-- <pre>Model: {{ model | json }}</pre> -->
           </div>
 
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-8">
                 <ngb-timepicker [(ngModel)]="time" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
                 <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                     Meridian - {{meridian ? "ON" : "OFF"}}
                 </button> -->
-                <hr>
+
                 <!-- <pre>Selected time: {{time | json}}</pre> -->
 
 
           </div>
 
 
-          <div class="form-group col-md-6">
+          <div class="form-group col-md-4">
               <h5>Ends:</h5>
                 <form class="form-inline">
                     <div class="form-group">
@@ -88,16 +88,16 @@
                       </div>
                     </div>
                   </form>
-                  <hr>
+
                   <!-- <pre>Model: {{ model_ends | json }}</pre> -->
             </div>
 
-            <div class="form-group col-md-6">
+            <div class="form-group col-md-8">
                   <ngb-timepicker [(ngModel)]="time_ends" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
                   <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                       Meridian - {{meridian ? "ON" : "OFF"}}
                   </button> -->
-                  <hr>
+
                   <!-- <pre>Selected time: {{time_ends | json}}</pre> -->
 
 
