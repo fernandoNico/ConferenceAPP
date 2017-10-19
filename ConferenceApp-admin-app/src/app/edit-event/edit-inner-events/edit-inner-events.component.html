@@ -1,0 +1,75 @@
+
+  <form *ngIf="innerEvent" >
+
+
+      <div class="form-row"  >
+
+          <div class="form-group col-md-12">
+              <h5>Event Title:</h5>
+              <!-- <label for="inputEmail4" class="col-form-label">Event Title</label> -->
+              <input type="text" class="form-control" name="username"   [(ngModel)]="innerEvent[0]"  name="title"  id="inputEmail4" placeholder="Enter Event/Conference title" required >
+          </div>
+
+          <div class="w-100"></div>
+
+
+          <div class="form-group col-md-6">
+            <p>Starts:</p>
+              <form class="form-inline">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input class="form-control" placeholder="yyyy-mm-dd"
+                              name="dp" [(ngModel)]="InnerEventmodelStart" ngbDatepicker #start="ngbDatepicker">
+                      <button class="input-group-addon" (click)="start.toggle()" type="button">
+                        <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+                <br><br>
+
+                <!-- <pre>Model: {{ InnerEventmodelStart | json }}</pre> -->
+          </div>
+
+          <div class="form-group col-md-6">
+                <ngb-timepicker [(ngModel)]="InnerEventTimeStart" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+                <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
+                    Meridian - {{meridian ? "ON" : "OFF"}}
+                </button> -->
+                <!-- <pre>Selected time: {{InnerEventTimeStart | json}}</pre> -->
+          </div>
+
+
+          <div class="form-group col-md-6">
+              <h5>Ends:</h5>
+                <form class="form-inline">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                                name="dp" [(ngModel)]="InnerEventmodelEnds" ngbDatepicker #ends="ngbDatepicker">
+                        <button class="input-group-addon" (click)="ends.toggle()" type="button">
+                          <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+
+                  <!-- <pre>Model: {{ InnerEventmodelEnds | json }}</pre> -->
+            </div>
+
+            <div class="form-group col-md-6">
+                  <ngb-timepicker [(ngModel)]="InnerEventTimeEnds" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+                  <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
+                      Meridian - {{meridian ? "ON" : "OFF"}}
+                  </button> -->
+                  <!-- <pre>Selected time: {{InnerEventTimeEnds | json}}</pre> -->
+            </div>
+
+            <label for="exampleFormControlTextarea1">Description</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1"  [(ngModel)]="innerEvent.eventDescription"  name="description"  rows="3" ></textarea>
+
+    </div>
+    <br><br>
+      <!-- end of form row div -->
+            <button type="submit" name="submit" (click)="ConfirmChanges()" class="btn btn-primary btn-lg">Submit</button>
+</form>

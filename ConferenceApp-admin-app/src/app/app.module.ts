@@ -26,6 +26,7 @@ import { EditFormComponent } from './edit-event/edit-Attende/edit-attendee.compo
 import { Speaker } from './edit-event/edit-speakers/Speaker.model';
 import { SpeakerFormComponent } from './edit-event/edit-speakers/edit-speaker.component';
 import { ExhibitorFormComponent } from './edit-event/edit-exhibitors/edit-exhibitor.component';
+import { InnerEventsFormComponent } from './edit-event/edit-inner-events/edit-inner-events.component';
 
 
 
@@ -55,7 +56,8 @@ const routes: Routes = [
     EditEventComponent,
     EditFormComponent,
     SpeakerFormComponent,
-    ExhibitorFormComponent
+    ExhibitorFormComponent,
+    InnerEventsFormComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), FormsModule, HttpModule, CommonModule,

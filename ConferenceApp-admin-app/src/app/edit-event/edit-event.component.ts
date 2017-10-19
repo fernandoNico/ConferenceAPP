@@ -6,6 +6,7 @@ import { Attendee } from './edit-Attende/Attendee.model';
 import { EditFormComponent } from './edit-Attende/edit-attendee.component';
 import { Speaker } from './edit-speakers/Speaker.model';
 import { Exhibitor } from './edit-exhibitors/Exhibitor.model';
+import { InnerEventsFormComponent } from './edit-inner-events/edit-inner-events.component';
 
 
 
@@ -18,6 +19,7 @@ import { Exhibitor } from './edit-exhibitors/Exhibitor.model';
 
 export class EditEventComponent implements OnInit {
   showEventTab = false;
+  showInnerEventTab =false;
   showExhibitorsTab = false;
   showAttendeesTab = false;
   showSpeakersab = false;
@@ -29,6 +31,14 @@ export class EditEventComponent implements OnInit {
   // Date Variables
   model;
   model_ends;
+
+
+  InnerEventmodelStart;
+  InnerEventTimeStart= {hour: 11, minute: 31};
+
+  InnerEventmodelEnds;
+  InnerEventTimeEnds= {hour: 12, minute: 31};
+
   time = {hour: 13, minute: 30};
   time_ends = {hour: 12, minute: 20};
   meridian = true;
@@ -46,6 +56,36 @@ export class EditEventComponent implements OnInit {
 
   ExhibitorsList: Exhibitor[];
   SelectedExhibitor: Exhibitor;
+
+  innerEvents: Array <any[]>;
+  SelectedInnerEvent: any;
+
+
+
+  addEvent(title: string , eventDescription: string) {
+
+    this.innerEvents.unshift(new Array(title, eventDescription, this.InnerEventmodelStart ,
+               this.InnerEventTimeStart, this.InnerEventmodelEnds , this.InnerEventTimeEnds));
+    console.log(this.innerEvents);
+  }
+
+  editinnerEvent(innerevents) {
+    this.SelectedInnerEvent =  innerevents;
+    if ( this.showInnerEventTab === true) {
+        this.showInnerEventTab =  false;
+    }
+  }
+
+  deleteinnerEvent(innerevents) {
+    let indexToDelete = this.innerEvents.indexOf(innerevents);
+    if (indexToDelete !== -1) {
+      this.innerEvents.splice(indexToDelete, 1);
+    }
+  }
+
+
+
+
 
 
 
@@ -70,11 +110,6 @@ export class EditEventComponent implements OnInit {
 
 
   ////////////////////////////
-
-
-
-
-
 
 
   // Speakers code
@@ -123,7 +158,7 @@ export class EditEventComponent implements OnInit {
 
 
   constructor(private eventService: EventServiceService, private activatedRoute: ActivatedRoute ) {
-            this.AttendeesList = []; this.SpeakerList = [] ; this.ExhibitorsList = [];
+            this.AttendeesList = []; this.SpeakerList = [] ; this.ExhibitorsList = []; this.innerEvents = [];
    }
 
   ngOnInit() {
