@@ -19,7 +19,7 @@
                   <div class="form-group">
                     <div class="input-group">
                       <input class="form-control" placeholder="yyyy-mm-dd"
-                              name="dp" [(ngModel)]="InnerEventmodelStart" ngbDatepicker #start="ngbDatepicker">
+                              name="dp" [(ngModel)]="innerEvent[2]"  ngbDatepicker #start="ngbDatepicker">
                       <button class="input-group-addon" (click)="start.toggle()" type="button">
                         <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
                       </button>
@@ -32,7 +32,7 @@
           </div>
 
           <div class="form-group col-md-6">
-                <ngb-timepicker [(ngModel)]="InnerEventTimeStart" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+                <ngb-timepicker [(ngModel)]="innerEvent[3]"  [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
                 <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                     Meridian - {{meridian ? "ON" : "OFF"}}
                 </button> -->
@@ -46,7 +46,7 @@
                     <div class="form-group">
                       <div class="input-group">
                         <input class="form-control" placeholder="yyyy-mm-dd"
-                                name="dp" [(ngModel)]="InnerEventmodelEnds" ngbDatepicker #ends="ngbDatepicker">
+                                name="dp" [(ngModel)]="innerEvent[4]"  ngbDatepicker #ends="ngbDatepicker">
                         <button class="input-group-addon" (click)="ends.toggle()" type="button">
                           <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
                         </button>
@@ -58,7 +58,7 @@
             </div>
 
             <div class="form-group col-md-6">
-                  <ngb-timepicker [(ngModel)]="InnerEventTimeEnds" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+                  <ngb-timepicker [(ngModel)]="innerEvent[5]"  [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
                   <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                       Meridian - {{meridian ? "ON" : "OFF"}}
                   </button> -->
@@ -66,7 +66,7 @@
             </div>
 
             <label for="exampleFormControlTextarea1">Description</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1"  [(ngModel)]="innerEvent.eventDescription"  name="description"  rows="3" ></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1"  [(ngModel)]="innerEvent[1]"  name="description"  rows="3" ></textarea>
 
     </div>
     <br><br>
