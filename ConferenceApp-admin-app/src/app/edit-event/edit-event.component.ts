@@ -1,5 +1,6 @@
 import { Component, OnInit, Injectable  } from '@angular/core';
 import { Event } from '../events/event.model';
+import { Eventos } from '../events/event.model';
 import { ActivatedRoute } from '@angular/router';
 import { EventServiceService } from '../event-service.service';
 import { Attendee } from './edit-Attende/Attendee.model';
@@ -28,6 +29,17 @@ export class EditEventComponent implements OnInit {
   lng: number ;
   zoom = 15;
 
+  End_model;
+  End_time= {hour: 14, minute: 14};;
+  Start_model;
+  Start_time= {hour: 14, minute: 14};
+
+  eventToUpdate: Event;
+  eventToUpdateId:number;
+
+
+
+
   // Date Variables
   model;
   model_ends;
@@ -43,7 +55,7 @@ export class EditEventComponent implements OnInit {
   time_ends = {hour: 12, minute: 20};
   meridian = true;
 
-  eventEdit: Event;
+  eventInfo: any;
   statusMessage: string;
   AddressList: any;
 
@@ -156,6 +168,7 @@ export class EditEventComponent implements OnInit {
       this.meridian = !this.meridian;
   }
 
+ 
 
   constructor(private eventService: EventServiceService, private activatedRoute: ActivatedRoute ) {
             this.AttendeesList = []; this.SpeakerList = [] ; this.ExhibitorsList = []; this.innerEvents = [];
@@ -166,14 +179,15 @@ export class EditEventComponent implements OnInit {
   }
 ///////
   getEventtoEdit() {
-    const eventId: string = this.activatedRoute.snapshot.params['id'];
+    const eventId: any = this.activatedRoute.snapshot.params['id'];
     this.eventService.getEventById(eventId).subscribe(
       (eventData) => {
         if (eventData == null) {
           this.statusMessage = 'Event with given id does not exits' ;
-        }else {}
-        this.eventEdit =  eventData;
-        console.log(this.eventEdit);
+        }else {
+        this.eventInfo =  eventData;
+        console.log(this.eventInfo);
+        }
       },
       (error) => {
         this.statusMessage = 'Problem with the service';
@@ -181,6 +195,23 @@ export class EditEventComponent implements OnInit {
       }
     );
   }
+
+  
+  updateEventInfo(title: string, description: string){
+
+this.eventToUpdateId = this.activatedRoute.snapshot.params['id'];
+    this.eventToUpdate =  new Event(title,null,null, description, description);
+    console.log(this.eventToUpdate);
+
+    this.eventService.updateEvent(this.eventToUpdate, this.eventToUpdateId)
+    .subscribe((response)=>{
+        console.log(response);
+        });
+  }
+    
+///////////////////
+
+
 
 /////
 
@@ -208,3 +239,15 @@ findAddress(postocode: any) {
 /////
 }
 
+  // addEvent(title : string ,postcode : string ,description :  string){
+  //   this.eventTitle = title;
+  //   console.log(this.eventTitle);
+  //   this.newEvent =  new Event(title, postcode, description, postcode, description);
+  //   this.eventService.addEventos(this.newEvent)
+  //   .subscribe((response)=>{
+  //   console.log(response);
+  //     if (response) {
+  //       this.router.navigate(['event/', this.eventTitle]);
+  //       }
+  //   });
+  // }

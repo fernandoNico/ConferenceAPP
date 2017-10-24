@@ -16,6 +16,8 @@ export class EventsComponent implements OnInit {
   events: Event[];
   selectedEvent: Event;
 
+  toDeleteId:number;
+
   constructor(private eventService: EventServiceService) { }
 
   ngOnInit() {
@@ -25,5 +27,24 @@ export class EventsComponent implements OnInit {
   onselectedEvent(event: Event) {
   this.selectedEvent =  event;
   }
+
+  deleteEvent(event: Event){
+    this.toDeleteId = event.EventId;
+    this.eventService.deleteEvent(this.toDeleteId).subscribe(
+    result => console.log(result));  
+
+    let indexToDelete = this.events.indexOf(event);
+      if (indexToDelete !== -1) {
+        this.events.splice(indexToDelete, 1);
+      }
+    
+    console.log(this.toDeleteId);
+
+  }
+
+  private extractData(res: Response) {
+    let body = res.json();
+    return body || {};
+}
 
 }

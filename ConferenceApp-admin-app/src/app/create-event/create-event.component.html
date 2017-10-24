@@ -9,13 +9,13 @@
           <div class="form-group col-md-12">
               <h5>Event Title:</h5>
               <!-- <label for="inputEmail4" class="col-form-label">Event Title</label> -->
-              <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Event/Conference title" required>
+              <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Event/Conference title" #title>
           </div>
 
           <div class="form-group col-md-6">
               <h5>Location:</h5>
               <label for="inputEmail4" class="col-form-label">Postcode</label>
-              <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Postcode" required #postcode>
+              <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Postcode" #postcode required >
               <br>
           </div>
 
@@ -68,10 +68,7 @@
                 <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                     Meridian - {{meridian ? "ON" : "OFF"}}
                 </button> -->
-
                 <!-- <pre>Selected time: {{time | json}}</pre> -->
-
-
           </div>
 
 
@@ -106,13 +103,16 @@
 
 
             <label for="exampleFormControlTextarea1">Description</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" #description></textarea>
 
 
     </div>
     <br><br>
       <!-- end of form row div -->
-            <button type="submit" name="submit" class="btn btn-primary btn-lg">Submit</button>
+            <button type="submit" name="submit" 
+            (click)="addEvent(title.value ,postcode.value ,description.value); 
+            hello();" 
+            class="btn btn-primary btn-lg">Submit</button>
     </form>
 
     </div>

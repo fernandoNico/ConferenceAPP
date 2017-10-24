@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EventServiceService } from '../event-service.service';
 
+import { Event, Eventos } from '../events/event.model';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-create-event',
   templateUrl: './create-event.component.html',
@@ -10,23 +13,49 @@ import { EventServiceService } from '../event-service.service';
 export class CreateEventComponent implements OnInit {
   AddressList: any;
   model;
+  model_ends;
   statusMessage: string;
 
-  // lat :number= 52.2458102;
-  // lng :number = -0.8924641;
+  dateStart: any ;
+  dateEnd: any ;
+
   lat :number;
   lng :number ;
   zoom: number = 15;
 
+  newEvent : Event;
+
   time = {hour: 13, minute: 30};
   time_ends = {hour: 12, minute: 20};
+
   meridian = true;
   toggleMeridian() {
       this.meridian = !this.meridian;
   }
 
-  constructor(private eventService: EventServiceService) { }
+  
+
+  eventTitle : any;
+
+
+  constructor(private eventService: EventServiceService, private router: Router) { }
   ngOnInit() {}
+
+
+  addEvent(title : string ,postcode : string ,description :  string){
+    this.eventTitle = title;
+    console.log(this.eventTitle);
+    this.newEvent =  new Event(title, postcode, description, postcode, description);
+    this.eventService.addEventos(this.newEvent)
+    .subscribe((response)=>{
+    console.log(response);
+      if (response) {
+        this.router.navigate(['event/', this.eventTitle]);
+        }
+    });
+  }
+
+ 
 
   findAddress(postocode: any) {
 

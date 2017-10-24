@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { Routes, RouterModule, Router, ActivatedRoute  } from '@angular/router';
-
+import {HttpClientModule} from '@angular/common/http'
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 
@@ -60,7 +60,7 @@ const routes: Routes = [
     InnerEventsFormComponent
   ],
   imports: [
-    BrowserModule, NgbModule.forRoot(), FormsModule, HttpModule, CommonModule,
+    BrowserModule, NgbModule.forRoot(), FormsModule, HttpClientModule, HttpModule, CommonModule,
     RouterModule.forRoot(routes, { useHash: true }), AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCA20_4EESP91_VCovXIqtbMWrRjWnuD8g'
     })

@@ -18,18 +18,18 @@
 <hr>
 
 <div class="card-columns">
-        <div *ngFor="let event of events">
+        <div *ngFor="let event of events ">
                 <div class="card" >
-                        <img class="card-img-top" src={{event.image}} alt="Card image cap">
+                        <img class="card-img-top" src="https://cdn.pixabay.com/photo/2016/03/09/15/29/laptop-1246672_960_720.jpg" alt="Card image cap">
                         <div class="card-body">
-                        <h5 class="card-title">{{event.name}}</h5>
-                        <small><span class="badge badge-info">{{event.date}}</span></small>
+                        <h5 class="card-title">{{event.eventTitle}}</h5>
+                        <small><span class="badge badge-info">{{event.eventStartDate}}</span></small>
                         <br><br>
-                        <h6><span class="badge badge-light">{{event.location}}</span></h6>
+                        <h6><span class="badge badge-light">{{event.eventPostcode}}</span></h6>
                         </div>
                         <div class="card-footer ">
-                                <a href="#" class="btn btn-warning btn-sm" [routerLink]="['/event', event.id]" >Edit </a>
-                                <a href="#" class="btn btn-danger btn-sm">Delete </a>
+                                <a  class="btn btn-warning btn-sm" [routerLink]="['/event', event.EventId]" >Edit </a>
+                                <a  class="btn btn-danger btn-sm" (click)="deleteEvent(event)">Delete </a>
                         </div>
                 </div>      
         </div>

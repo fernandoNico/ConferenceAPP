@@ -1,6 +1,6 @@
 <div  class="container text-center">
-  <div id="wrapper" *ngIf="eventEdit">
-    <h2>Event Information</h2>
+  <div id="wrapper" >
+    <h2>Event Management</h2>
     <br>
     <ngb-tabset >
 <!-- Event Details Tab *****************************************************************************************************-->
@@ -8,19 +8,21 @@
         <ng-template ngbTabTitle><b>Event Details</b> </ng-template>
           <ng-template ngbTabContent>
           <br>
-          <form  *ngIf="eventEdit" >
-                <div class="form-row" *ngFor="let event_info of eventEdit" >
+          <form *ngIf="eventInfo">
+                <div class="form-row">
                       <div class="form-group col-md-12">
                             <h5>Event Title:</h5>
-                            <h2>{{event_info.name}}</h2>
+                            <h2>{{eventInfo.eventTitle}}</h2>
                             <label for="inputEmail4" class="col-form-label">Event Title</label>
-                            <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Event/Conference title" required>
+                            <input type="text" class="form-control" name="username" value="{{eventInfo.eventTitle}}" 
+                            [(ngModel)]="eventInfo.eventTitle"  id="inputEmail4" placeholder="Enter Event/Conference title" 
+                            required >
                       </div>
 
                       <div class="form-group col-md-6">
                             <h5>Location:</h5>
                             <label for="inputEmail4" class="col-form-label">Postcode</label>
-                            <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Postcode" required #postcode>
+                            <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Postcode" [(ngModel)]="eventInfo.eventTitle" required >
                             <br>
                       </div>
 
@@ -56,7 +58,7 @@
                                 <div class="form-group">
                                   <div class="input-group">
                                     <input class="form-control" placeholder="yyyy-mm-dd"
-                                           name="dp" [(ngModel)]="model" ngbDatepicker #start="ngbDatepicker">
+                                           name="dp" [(ngModel)]="Start_model" ngbDatepicker #start="ngbDatepicker" >
                                     <button class="input-group-addon" (click)="start.toggle()" type="button">
                                       <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
                                     </button>
@@ -64,15 +66,15 @@
                                 </div>
                               </form>
                               <br><br>
-                              <!-- <pre>Model: {{ model | json }}</pre> -->
+                              <pre>Model: {{ Start_model | json }}</pre>
                       </div>
 
                       <div class="form-group col-md-6">
-                              <ngb-timepicker [(ngModel)]="time" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+                              <ngb-timepicker [(ngModel)]="Start_time" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
                               <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                                   Meridian - {{meridian ? "ON" : "OFF"}}
                               </button> -->
-                              <!-- <pre>Selected time: {{time | json}}</pre> -->
+                              <pre>Selected time: {{Start_time | json}}</pre>
                       </div>
 
                       <div class="form-group col-md-6">
@@ -81,31 +83,34 @@
                                   <div class="form-group">
                                     <div class="input-group">
                                       <input class="form-control" placeholder="yyyy-mm-dd"
-                                             name="dp" [(ngModel)]="model_ends" ngbDatepicker #ends="ngbDatepicker">
+                                             name="dp" [(ngModel)]="End_model" ngbDatepicker #ends="ngbDatepicker">
                                       <button class="input-group-addon" (click)="ends.toggle()" type="button">
                                         <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
                                       </button>
                                     </div>
                                   </div>
                                 </form>
-                                <!-- <pre>Model: {{ model_ends | json }}</pre> -->
+                                <pre>Model: {{ End_model | json }}</pre>
                       </div>
 
                       <div class="form-group col-md-6">
-                                <ngb-timepicker [(ngModel)]="time_ends" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+                                <ngb-timepicker [(ngModel)]="End_time" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
                                 <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                                     Meridian - {{meridian ? "ON" : "OFF"}}
                                 </button> -->
-                                <!-- <pre>Selected time: {{time_ends | json}}</pre> -->
+                                <pre>Selected time: {{End_time | json}}</pre>
                       </div>
 
                           <label for="exampleFormControlTextarea1">Description</label>
-                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value="{{eventInfo.eventDescription}}" 
+                          [(ngModel)]="eventInfo.eventDescription" name="description" #eventDesc>
+                              {{eventInfo.Description}}
+                          </textarea>
 
                 </div>
                   <br><br>
                     <!-- end of form row div -->
-                          <!-- <button type="submit" name="submit" class="btn btn-primary btn-lg">Submit</button> -->
+                          <button type="submit" name="submit" (click)="updateEventInfo( eventInfo.eventTitle , eventInfo.eventDescription)" class="btn btn-primary btn-lg">Submit</button>
           </form>
           <br><br>
         </ng-template>
