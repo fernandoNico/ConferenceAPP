@@ -39,7 +39,9 @@ export class CreateEventComponent implements OnInit {
 
 
   constructor(private eventService: EventServiceService, private router: Router) { }
-  ngOnInit() {}
+  ngOnInit() {
+  
+  }
 
 
   addEvent(title : string ,postcode : string ,description :  string){
@@ -50,7 +52,8 @@ export class CreateEventComponent implements OnInit {
     .subscribe((response)=>{
     console.log(response);
       if (response) {
-        this.router.navigate(['event/', this.eventTitle]);
+        // this.router.navigate(['event/', this.eventTitle, { newEvent: 'false' }]);
+        this.router.navigate(['event/', this.eventTitle,false]);
         }
     });
   }

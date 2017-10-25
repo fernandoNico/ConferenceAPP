@@ -1,5 +1,7 @@
 <div  class="container text-center">
   <div id="wrapper" >
+
+        <ngb-alert class="text-center" *ngIf="!staticAlertClosed" type="info" (close)="staticAlertClosed = true">Event created Sucessfully!</ngb-alert>
     <h2>Event Management</h2>
     <br>
     <ngb-tabset >

@@ -83,6 +83,7 @@ export class EditEventComponent implements OnInit {
 
   editinnerEvent(innerevents) {
     this.SelectedInnerEvent =  innerevents;
+    
     if ( this.showInnerEventTab === true) {
         this.showInnerEventTab =  false;
     }
@@ -168,7 +169,7 @@ export class EditEventComponent implements OnInit {
       this.meridian = !this.meridian;
   }
 
- 
+  staticAlertClosed = false;
 
   constructor(private eventService: EventServiceService, private activatedRoute: ActivatedRoute ) {
             this.AttendeesList = []; this.SpeakerList = [] ; this.ExhibitorsList = []; this.innerEvents = [];
@@ -176,10 +177,14 @@ export class EditEventComponent implements OnInit {
 
   ngOnInit() {
     this.getEventtoEdit();
+    setTimeout(() => this.staticAlertClosed = true, 2000);
   }
+  
 ///////
   getEventtoEdit() {
-    const eventId: any = this.activatedRoute.snapshot.params['id'];
+    var  eventId: any = this.activatedRoute.snapshot.params['id'];
+    let  newEventToedit: boolean = this.activatedRoute.snapshot.params['newEvent'];
+    
     this.eventService.getEventById(eventId).subscribe(
       (eventData) => {
         if (eventData == null) {
@@ -187,20 +192,24 @@ export class EditEventComponent implements OnInit {
         }else {
         this.eventInfo =  eventData;
         console.log(this.eventInfo);
+        // this.staticAlertClosed = newEventToedit;
         }
+        
       },
       (error) => {
         this.statusMessage = 'Problem with the service';
         console.log(error);
       }
     );
+    
   }
 
-  
+  thetime: string;
   updateEventInfo(title: string, description: string){
 
-this.eventToUpdateId = this.activatedRoute.snapshot.params['id'];
-    this.eventToUpdate =  new Event(title,null,null, description, description);
+    this.eventToUpdateId = this.activatedRoute.snapshot.params['id'];
+  this.thetime = "2017-05-11T11:00:09";
+    this.eventToUpdate =  new Event(title,this.thetime,this.thetime, description, description);
     console.log(this.eventToUpdate);
 
     this.eventService.updateEvent(this.eventToUpdate, this.eventToUpdateId)
