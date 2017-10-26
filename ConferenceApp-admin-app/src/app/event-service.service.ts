@@ -11,7 +11,7 @@ import { Event } from './events/event.model';
 @Injectable()
 export class EventServiceService {
 
-  apiKey = 'mIWLWu8C_kG3okPgVRzQng10675';
+  apiKey = 'z45QYfjvq06ry_t26vBj5A10825';
   url = 'http://localhost:56647/api/Events';
   options: RequestOptions;
  

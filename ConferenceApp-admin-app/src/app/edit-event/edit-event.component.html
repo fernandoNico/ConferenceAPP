@@ -1,4 +1,4 @@
-<div  class="container text-center">
+<div  class="container-fluid text-center">
   <div id="wrapper" >
 
         <ngb-alert class="text-center" *ngIf="!staticAlertClosed" type="info" (close)="staticAlertClosed = true">Event created Sucessfully!</ngb-alert>
@@ -12,8 +12,8 @@
           <br>
           <form *ngIf="eventInfo">
                 <div class="form-row">
-                      <div class="form-group col-md-12">
-                            <h5>Event Title:</h5>
+                       
+                      <div class="form-group col-md-12">                            
                             <h2>{{eventInfo.eventTitle}}</h2>
                             <label for="inputEmail4" class="col-form-label">Event Title</label>
                             <input type="text" class="form-control" name="username" value="{{eventInfo.eventTitle}}" 
@@ -21,28 +21,33 @@
                             required >
                       </div>
 
-                      <div class="form-group col-md-6">
-                            <h5>Location:</h5>
+                    <div class="form-group col-md-8" *ngIf="selectnewAddress">
+                            <label for="exampleFormControlSelect1">Select Address</label>
+                            <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="eventInfo.eventStreet" name="street" >
+                                <option *ngFor="let address of AddressList.addresses"  value="{{address}} ">{{address}}</option>
+                              </select>
+                    </div>
+                    
+                    <div class="form-group col-md-8" *ngIf="!selectnewAddress">
+                            <label for="inputEmail4" class="col-form-label">Street Number</label>
+                            <input type="text" class="form-control" name="street"   id="inputEmail4" placeholder="Enter Postcode" [(ngModel)]="eventInfo.eventStreet" required >
+                    </div>
+                
+                    <div class="form-group col-md-4">
                             <label for="inputEmail4" class="col-form-label">Postcode</label>
-                            <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Postcode" [(ngModel)]="eventInfo.eventTitle" required >
+                            <input type="text" class="form-control" name="postcode"   id="inputEmail4" placeholder="Enter Postcode" [(ngModel)]="eventInfo.eventPostcode" required >
                             <br>
-                      </div>
+                    </div>
 
-                      <div class="form-group col-md-12" *ngIf="AddressList">
-                              <label for="exampleFormControlSelect1">Select Address</label>
-                              <select class="form-control" id="exampleFormControlSelect1"  >
-                                  <option *ngFor="let address of AddressList.addresses">{{address}}</option>
-                                </select>
-                      </div>
+                      
 
-                      <div class="form-group col-md-12">
-                            <!-- <button type="submit" name="submit"  (click)="findAddress(postcode.value)" class="btn btn-primary ">Find Address</button> -->
-                      </div>
+                    <div class="form-group col-md-12">
+                            <button type="submit" name="submit"  (click)="findnewAddress(eventInfo.eventPostcode)" class="btn btn-primary ">Find New Address</button>
+                    </div>
 
-                      <div class="w-100"></div>
+                    <div class="w-100"></div>
 
-
-                      <div class="form-group col-md-12" *ngIf="AddressList">
+                    <div class="form-group col-md-12" *ngIf="AddressList">
                               <div class="card">
                                   <div class="card-body">
                                       <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
@@ -50,11 +55,11 @@
                                         </agm-map>
                                   </div>
                                 </div>
-                      </div>
+                    </div>
 
-                      <div class="w-100"></div>
+                    <div class="w-100"></div><br>
 
-                      <div class="form-group col-md-6">
+                    <div class="form-group col-md-6">
                           <h5>Starts:</h5>
                             <form class="form-inline">
                                 <div class="form-group">
@@ -67,19 +72,22 @@
                                   </div>
                                 </div>
                               </form>
-                              <br><br>
-                              <pre>Model: {{ Start_model | json }}</pre>
-                      </div>
+                              <br>
+                              <!-- <pre>Model: {{ Start_model | json }}</pre> -->
+                              <small><b>Selected Start date: </b>{{ Start_model.year}} - {{ Start_model.month}} - {{ Start_model.day}}</small>
+                    </div>
 
-                      <div class="form-group col-md-6">
+                    <div class="form-group col-md-6">
                               <ngb-timepicker [(ngModel)]="Start_time" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
                               <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                                   Meridian - {{meridian ? "ON" : "OFF"}}
                               </button> -->
-                              <pre>Selected time: {{Start_time | json}}</pre>
-                      </div>
+                              <!-- <pre>Selected time: {{Start_time | json}}</pre> -->
+                              <small><b>Selected Start time: </b>{{ Start_time.hour}} : {{ Start_time.minute}}</small>
+                    </div>
+                      
 
-                      <div class="form-group col-md-6">
+                    <div class="form-group col-md-6">
                             <h5>Ends:</h5>
                               <form class="form-inline">
                                   <div class="form-group">
@@ -92,27 +100,33 @@
                                     </div>
                                   </div>
                                 </form>
-                                <pre>Model: {{ End_model | json }}</pre>
-                      </div>
+                                <br>
+                                <!-- <pre>Model: {{ End_model | json }}</pre> -->
+                                <small><b>Selected End date: </b>{{ End_model.year}} - {{ End_model.month}} - {{ End_model.day}}</small>
+                    </div>
 
-                      <div class="form-group col-md-6">
+                    <div class="form-group col-md-6">
                                 <ngb-timepicker [(ngModel)]="End_time" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
                                 <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                                     Meridian - {{meridian ? "ON" : "OFF"}}
                                 </button> -->
-                                <pre>Selected time: {{End_time | json}}</pre>
-                      </div>
-
-                          <label for="exampleFormControlTextarea1">Description</label>
+                                <!-- <pre>Selected time: {{End_time | json}}</pre> -->
+                                <small><b>Selected End time: </b>{{ End_time.hour}} : {{ End_time.minute}}</small>
+                    </div>
+                    <br><br>
+                    <h5>Description:</h5>
+                          <!-- <label for="exampleFormControlTextarea1">Description</label> -->
                           <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value="{{eventInfo.eventDescription}}" 
-                          [(ngModel)]="eventInfo.eventDescription" name="description" #eventDesc>
+                          [(ngModel)]="eventInfo.eventDescription" name="description" >
                               {{eventInfo.Description}}
                           </textarea>
 
                 </div>
                   <br><br>
                     <!-- end of form row div -->
-                          <button type="submit" name="submit" (click)="updateEventInfo( eventInfo.eventTitle , eventInfo.eventDescription)" class="btn btn-primary btn-lg">Submit</button>
+                    <button type="submit" name="submit" 
+                    (click)="updateEventInfo( eventInfo.eventTitle , eventInfo.eventPostcode, eventInfo.eventDescription,  eventInfo.eventStreet)" 
+                    class="btn btn-primary btn-lg">Submit Changes</button>
           </form>
           <br><br>
         </ng-template>

@@ -1,14 +1,9 @@
 <div  class="container text-center">
-
-    
-
-
     <form id="wrapper">
         <br>
         <h1>Create an Event</h1>
         <br>
       <div class="form-row">
-
           <div class="form-group col-md-12">
               <h5>Event Title:</h5>
               <!-- <label for="inputEmail4" class="col-form-label">Event Title</label> -->
@@ -21,58 +16,57 @@
               <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Postcode" #postcode required >
               <br>
           </div>
-
+          
           <div class="form-group col-md-12" *ngIf="AddressList">
                 <label for="exampleFormControlSelect1">Select Address</label>
-                <select class="form-control" id="exampleFormControlSelect1"  >
-                    <option *ngFor="let address of AddressList.addresses">{{address}}</option>
+                <select class="form-control" id="exampleFormControlSelect1" (change)="onChange($event)">
+                    <option *ngFor="let address of AddressList.addresses" [value]="address">{{address}}</option>
                   </select>
-
           </div>
 
           <div class="form-group col-md-12">
               <button type="submit" name="submit"  (click)="findAddress(postcode.value)" class="btn btn-primary ">Find Address</button>
           </div>
 
-            <div class="w-100"></div>
+          <div class="w-100"></div>
 
-
-            <div class="form-group col-md-12" *ngIf="AddressList">
-                <div class="card">
+          <div class="form-group col-md-12" *ngIf="AddressList">
+              <div class="card">
                     <div class="card-body">
                         <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom">
                             <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
                           </agm-map>
                     </div>
-                  </div>
-            </div>
-
-
-              <div class="w-100"></div>
-          <div class="form-group col-md-4">
-            <h5>Starts:</h5>
-              <form class="form-inline">
-                  <div class="form-group">
-                    <div class="input-group">
-                      <input class="form-control" placeholder="yyyy-mm-dd"
-                             name="dp" [(ngModel)]="model" ngbDatepicker #start="ngbDatepicker">
-                      <button class="input-group-addon" (click)="start.toggle()" type="button">
-                        <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-
-                <!-- <pre>Model: {{ model | json }}</pre> -->
+              </div>
           </div>
+
+          <div class="w-100"></div>
+            <div class="form-group col-md-4">
+              <h5>Starts:</h5>
+                <form class="form-inline">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                              name="dp" [(ngModel)]="model" ngbDatepicker #start="ngbDatepicker">
+                        <button class="input-group-addon" (click)="start.toggle()" type="button">
+                          <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- <pre>Model: {{ model | json }}</pre> -->
+            </div>
 
           <div class="form-group col-md-8">
                 <ngb-timepicker [(ngModel)]="time" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
                 <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                     Meridian - {{meridian ? "ON" : "OFF"}}
                 </button> -->
-                <!-- <pre>Selected time: {{time | json}}</pre> -->
+                <pre>Selected time: {{time | json}}</pre>
           </div>
+
+
+
 
 
           <div class="form-group col-md-4">
@@ -112,7 +106,7 @@
     </div>
     <br><br>
       <!-- end of form row div -->
-            <button type="submit" name="submit" 
+            <button type="submit" 
             (click)="addEvent(title.value ,postcode.value ,description.value);" 
             class="btn btn-primary btn-lg">Submit</button>
     </form>

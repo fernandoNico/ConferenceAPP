@@ -8,7 +8,7 @@ import { EditFormComponent } from './edit-Attende/edit-attendee.component';
 import { Speaker } from './edit-speakers/Speaker.model';
 import { Exhibitor } from './edit-exhibitors/Exhibitor.model';
 import { InnerEventsFormComponent } from './edit-inner-events/edit-inner-events.component';
-
+import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -29,10 +29,10 @@ export class EditEventComponent implements OnInit {
   lng: number ;
   zoom = 15;
 
-  End_model;
-  End_time= {hour: 14, minute: 14};;
-  Start_model;
-  Start_time= {hour: 14, minute: 14};
+  
+
+
+
 
   eventToUpdate: Event;
   eventToUpdateId:number;
@@ -55,7 +55,7 @@ export class EditEventComponent implements OnInit {
   time_ends = {hour: 12, minute: 20};
   meridian = true;
 
-  eventInfo: any;
+  eventInfo: Event;
   statusMessage: string;
   AddressList: any;
 
@@ -169,32 +169,112 @@ export class EditEventComponent implements OnInit {
       this.meridian = !this.meridian;
   }
 
-  staticAlertClosed = false;
+  staticAlertClosed = true;
 
-  constructor(private eventService: EventServiceService, private activatedRoute: ActivatedRoute ) {
-            this.AttendeesList = []; this.SpeakerList = [] ; this.ExhibitorsList = []; this.innerEvents = [];
-   }
+  constructor(private eventService: EventServiceService, private activatedRoute: ActivatedRoute, private ngbDateParserFormatter: NgbDateParserFormatter ) {
+            this.AttendeesList = []; this.SpeakerList = [] ; this.ExhibitorsList = []; this.innerEvents = []; }
 
+   added: string;
+   postcode: string;
+   selectnewAddress = false;
   ngOnInit() {
     this.getEventtoEdit();
-    setTimeout(() => this.staticAlertClosed = true, 2000);
+    this.added = this.activatedRoute.snapshot.params['added'];
+    if(this.added === 'added'){
+      console.log(this.added);
+       this.staticAlertClosed = false;
+       setTimeout(() => this.staticAlertClosed = true, 8000);
+    }
+
+    
   }
   
+  // yearStart: any;
+  // monthStart: any;
+  // dayStart: any;
+
+  // yearEnd: any;
+  // monthEnd: any;
+  // dayEnd: any;
+
+  // hourStart: any;
+  // minStart: any;
+
+  // hourEnd: any;
+  // minEnd: any;
+
+ 
+  Start_model;
+  Start_time;
+  End_model;
+  End_time;
 ///////
   getEventtoEdit() {
     var  eventId: any = this.activatedRoute.snapshot.params['id'];
-    let  newEventToedit: boolean = this.activatedRoute.snapshot.params['newEvent'];
-    
     this.eventService.getEventById(eventId).subscribe(
       (eventData) => {
         if (eventData == null) {
           this.statusMessage = 'Event with given id does not exits' ;
         }else {
         this.eventInfo =  eventData;
-        console.log(this.eventInfo);
-        // this.staticAlertClosed = newEventToedit;
-        }
+        console.log(this.eventInfo); 
+        this.postcode =  this.eventInfo.eventPostcode;
+        console.log( this.postcode); 
+        this.findAddress(this.postcode);
+
+        var yearStart =  (this.eventInfo.eventStartDate).substr(0,4);
+        console.log(yearStart);
+
+        var monthStart =  (this.eventInfo.eventStartDate).substr(5,2);
+        console.log(monthStart);
+
+        var dayStart =  (this.eventInfo.eventStartDate).substr(8,2);
+        console.log(dayStart);
+
+
+
+
+        var hourStart =  (this.eventInfo.eventStartDate).substr(11,2);
+        console.log(hourStart);
+
+        var minStart =  (this.eventInfo.eventStartDate).substr(14,2);
+        console.log(minStart);
+
+
+
+
+        var yearEnd =  (this.eventInfo.eventEndDate).substr(0,4);
+        console.log(yearEnd);
+
+        var monthEnd =  (this.eventInfo.eventEndDate).substr(5,2);
+        console.log(monthEnd);
+
+        var dayEnd =  (this.eventInfo.eventEndDate).substr(8,2);
+        console.log(dayEnd);
+
+
+
+
+        var hourEnd =  (this.eventInfo.eventEndDate).substr(11,2);
+        console.log(hourEnd);
+        var minEnd =  (this.eventInfo.eventEndDate).substr(14,2);
+        console.log(minEnd);
+       
+        this.Start_model= { year: yearStart, month: monthStart, day: dayStart };
+        console.log(this.Start_model);
+        this.Start_time= {hour: hourStart, minute: minStart, second: 30};
+      
+        this.End_model= { year: yearEnd, month: monthEnd, day: dayEnd };
+        this.End_time= {hour: hourEnd, minute: minEnd, second: 30};
+
+
         
+
+
+
+
+
+        } 
       },
       (error) => {
         this.statusMessage = 'Problem with the service';
@@ -204,12 +284,25 @@ export class EditEventComponent implements OnInit {
     
   }
 
+
+  hourAmStart: string = "T";
+  hourAmEnd: string = "T";
+  datetimeStart: string;
+  datetimeEnd: string;
   thetime: string;
-  updateEventInfo(title: string, description: string){
+  updateEventInfo(title: string, postcode: string,description: string, street: string){
+
+    if(this.Start_time.hour < 10){this.hourAmStart = "T0"; } 
+    if(this.End_time.hour < 10){this.hourAmEnd = "T0"; }
+
+    this.datetimeStart = this.ngbDateParserFormatter.format(this.Start_model) + this.hourAmStart + this.Start_time.hour +":"+  this.Start_time.minute+":"+ this.Start_time.second;
+    this.datetimeEnd = this.ngbDateParserFormatter.format(this.End_model) + this.hourAmEnd + this.End_time.hour +":"+  this.End_time.minute+":"+ this.End_time.second;
+
+    console.log(this.datetimeStart );
+    console.log(this.datetimeEnd);
 
     this.eventToUpdateId = this.activatedRoute.snapshot.params['id'];
-  this.thetime = "2017-05-11T11:00:09";
-    this.eventToUpdate =  new Event(title,this.thetime,this.thetime, description, description);
+    this.eventToUpdate =  new Event(title,this.datetimeStart,this.datetimeEnd, postcode, description, street);
     console.log(this.eventToUpdate);
 
     this.eventService.updateEvent(this.eventToUpdate, this.eventToUpdateId)
@@ -224,8 +317,8 @@ export class EditEventComponent implements OnInit {
 
 /////
 
-findAddress(postocode: any) {
-      this.eventService.getEventPostcode(postocode).subscribe(
+findAddress(postcode: string) {
+      this.eventService.getEventPostcode(postcode).subscribe(
         (Data) => {
           if (Data == null) {
             this.statusMessage = 'Postcode do not exist!' ;
@@ -241,22 +334,29 @@ findAddress(postocode: any) {
         }
       );
     }
-
+  
+findnewAddress(postcode: string) {
+  this.eventService.getEventPostcode(postcode).subscribe(
+    (Data) => {
+      if (Data == null) {
+        this.statusMessage = 'Postcode do not exist!' ;
+      }else {}
+      this.AddressList =  Data;
+      this.lat =  this.AddressList.latitude;
+      this.lng =  this.AddressList.longitude;
+      console.log(this.AddressList);
+      this.selectnewAddress = true;
+      console.log(this.selectnewAddress);
+    },
+    (error) => {
+      this.statusMessage = 'Problem with the service';
+      console.log(error);
+    }
+  );
+}
 
 
 
 /////
 }
 
-  // addEvent(title : string ,postcode : string ,description :  string){
-  //   this.eventTitle = title;
-  //   console.log(this.eventTitle);
-  //   this.newEvent =  new Event(title, postcode, description, postcode, description);
-  //   this.eventService.addEventos(this.newEvent)
-  //   .subscribe((response)=>{
-  //   console.log(response);
-  //     if (response) {
-  //       this.router.navigate(['event/', this.eventTitle]);
-  //       }
-  //   });
-  // }

@@ -38,6 +38,8 @@ const routes: Routes = [
   { path: 'events', component: EventsComponent },
   { path: 'create', component: CreateEventComponent },
   { path: 'event/:id', component: EditEventComponent },
+  { path: 'event/:id/:added', component: EditEventComponent },
+
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: '**', component: HomeComponentComponent },
 ];

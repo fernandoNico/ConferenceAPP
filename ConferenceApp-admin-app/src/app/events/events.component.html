@@ -22,10 +22,11 @@
                 <div class="card" >
                         <img class="card-img-top" src="https://cdn.pixabay.com/photo/2016/03/09/15/29/laptop-1246672_960_720.jpg" alt="Card image cap">
                         <div class="card-body">
-                        <h4 class="card-title">{{event.eventTitle}}</h4>
-                        <small>{{event.eventStartDate}}</small>
-                        <br><br>
-                        <h6><span class="badge badge-light">{{event.eventPostcode}}</span></h6>
+                        <h4 class="card-title">{{event.eventTitle}}</h4> <small>{{event.eventStartDate | date:'medium' }}  </small>
+                        <br>
+                        <small>{{event.eventStreet}}</small>
+                        <h6><span class="badge badge-info">{{event.eventPostcode}}</span></h6>
+                        
                         </div>
                         <div class="card-footer ">
                                 <a  class="btn btn-warning btn-sm" [routerLink]="['/event', event.EventId]" >Edit </a>
