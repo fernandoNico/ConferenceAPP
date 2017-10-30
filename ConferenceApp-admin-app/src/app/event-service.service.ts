@@ -7,6 +7,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/Observable/throw';
 import 'rxjs/add/operator/toPromise';
 import { Event } from './events/event.model';
+import { SubEvent } from './edit-event/edit-inner-events/SubEvent.model';
 
 @Injectable()
 export class EventServiceService {
@@ -17,6 +18,13 @@ export class EventServiceService {
  
 
   constructor(private http: Http) {}
+
+getSubEvents(id: number){
+  return this.http.get('http://localhost:56647/api/SubEvents/'+ id + '/events')
+  .map((response: Response) => <Event>response.json()).catch(this.handleError);
+}
+
+
 
   getEvents() {
     return this.http.get(('http://localhost:56647/api/Events'))
@@ -33,7 +41,7 @@ export class EventServiceService {
     .map((res: Response) => res.json()).catch(this.handleError);
   }
 
-addEventos(event:Event){
+addEvent(event:Event){
     let endpoint = this.url;
     let body = JSON.stringify(event);
     let headers = new Headers({'Content-Type':'application/json'});
@@ -42,6 +50,17 @@ addEventos(event:Event){
         .map((res:Response) => res.json())
         .catch((error:any) => Observable.throw(error.json().error || 'Server Error'));
 }
+
+addSubEvents(id: number, event:SubEvent){
+  let endpoint = 'http://localhost:56647/api/Events/'+ id;
+  let body = JSON.stringify(event);
+  let headers = new Headers({'Content-Type':'application/json'});
+  let options = new RequestOptions({headers: headers});
+  return this.http.post(endpoint, body, options)
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'Server Error'));
+}
+
 
 updateEvent(event:Event, id:number){
   let endpoint = `${this.url}/${id}`;

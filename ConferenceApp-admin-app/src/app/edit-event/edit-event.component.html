@@ -137,14 +137,15 @@
           <ng-template ngbTabContent>
             <br>
             <div class="row">
-                <div class="col-sm-8">
+                <div class="col-sm-7">
                     <h5>Add <button type="submit" name="submit" (click)="showInnerEventTab = !showInnerEventTab" class="btn btn-warning btn-sm">+</button></h5>
-                  <form *ngIf="showInnerEventTab" >
-
+                    <br>
+                    <form *ngIf="showInnerEventTab" >
+                        
                                     <div class="form-row"  >
-
+                                           
                                         <div class="form-group col-md-12">
-                                            <h5>Event Title:</h5>
+                                            <h6>Event Title:</h6>
                                             <!-- <label for="inputEmail4" class="col-form-label">Event Title</label> -->
                                             <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Event/Conference title" required #title>
                                         </div>
@@ -152,8 +153,8 @@
                                         <div class="w-100"></div>
 
 
-                                        <div class="form-group col-md-6">
-                                          <h5>Starts:</h5>
+                                        <div class="form-group col-md-12">
+                                          <h6>Starts:</h6>
                                             <form class="form-inline">
                                                 <div class="form-group">
                                                   <div class="input-group">
@@ -165,22 +166,23 @@
                                                   </div>
                                                 </div>
                                               </form>
-                                              <br><br>
+                                              <br>
+                                              <ngb-timepicker [(ngModel)]="InnerEventTimeStart" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
 
                                               <!-- <pre>Model: {{ InnerEventmodelStart | json }}</pre> -->
                                         </div>
 
-                                        <div class="form-group col-md-6">
-                                              <ngb-timepicker [(ngModel)]="InnerEventTimeStart" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+                                        <!-- <div class="form-group col-md-6"> -->
+                                             
                                               <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                                                   Meridian - {{meridian ? "ON" : "OFF"}}
                                               </button> -->
                                               <!-- <pre>Selected time: {{InnerEventTimeStart | json}}</pre> -->
-                                        </div>
+                                        <!-- </div> -->
 
 
-                                        <div class="form-group col-md-6">
-                                            <h5>Ends:</h5>
+                                        <div class="form-group col-md-12">
+                                            <h6>Ends:</h6>
                                               <form class="form-inline">
                                                   <div class="form-group">
                                                     <div class="input-group">
@@ -192,21 +194,23 @@
                                                     </div>
                                                   </div>
                                                 </form>
-
+                                                <br>
+                                                <ngb-timepicker [(ngModel)]="InnerEventTimeEnds" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
                                                 <!-- <pre>Model: {{ InnerEventmodelEnds | json }}</pre> -->
                                           </div>
 
-                                          <div class="form-group col-md-6">
-                                                <ngb-timepicker [(ngModel)]="InnerEventTimeEnds" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+                                          <!-- <div class="form-group col-md-6"> -->
+                                               
                                                 <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                                                     Meridian - {{meridian ? "ON" : "OFF"}}
                                                 </button> -->
                                                 <!-- <pre>Selected time: {{InnerEventTimeEnds | json}}</pre> -->
-                                          </div>
-
-                                          <label for="exampleFormControlTextarea1">Description</label>
+                                          <!-- </div> -->
+                                          <div class="form-group col-md-12">    
+                                                <h6>Description</h6>     
+                                         
                                           <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" #eventDescription></textarea>
-
+                                        </div>
                                   </div>
                                   <br><br>
                                     <!-- end of form row div -->
@@ -214,27 +218,24 @@
                                   </form>
 
                                   <app-inner-events-form  [innerEvent]="SelectedInnerEvent" ></app-inner-events-form >
+                                    <br>
                           </div>
-
-                          <div class="col-sm-4">
+                          
+                          <div class="col-sm-5">
 
                                                     <h5>Events Scheduled </h5>
-
-                                                    <div class="card" *ngFor="let innerevents of innerEvents  " >
+                                                    <br>
+                                                    <div class="card" *ngFor="let subEvent of innerEvents  " >
                                                         <div class="card-body">
-                                                            <h4 class="card-title">{{innerevents[0]}} </h4>
-                                                            <p>{{innerevents[1]}}</p>
+                                                            <h4 class="card-title">{{subEvent.innerEventTitle}} </h4>
+                                                            <p>{{subEvent.innerEventDescription}}</p>
                                                             <h5> Start</h5>
                                                             <h6 class="card-subtitle mb-2 text-muted">
-                                                              {{innerevents[2].year}}-{{innerevents[2].month}}-{{innerevents[2].day}}
-                                                              At:
-                                                              {{innerevents[3].hour}}:{{innerevents[3].minute}}
+                                                              {{subEvent.innerEventStartDate | date:'medium' }}
                                                             </h6>
                                                             <h5> End</h5>
                                                             <h6 class="card-subtitle mb-2 text-muted">
-                                                                {{innerevents[4].year}}-{{innerevents[4].month}}-{{innerevents[4].day}}
-                                                                At:
-                                                                {{innerevents[5].hour}}:{{innerevents[5].minute}}
+                                                            {{subEvent.innerEventEndDate| date:'medium' }}
                                                               </h6>
                                                             <a  class="btn btn-warning btn-sm"(click)="editinnerEvent(innerevents)">Edit</a>
                                                             <a  class="btn btn-danger btn-sm"(click)="deleteinnerEvent(innerevents)">Delete</a>

@@ -65,7 +65,7 @@ export class CreateEventComponent implements OnInit {
     console.log(this.datetimeEnd);
 
     this.newEvent =  new Event(title, this.datetimeStart, this.datetimeEnd, postcode, description, this.street);
-    this.eventService.addEventos(this.newEvent)
+    this.eventService.addEvent(this.newEvent)
     .subscribe((response)=>{
     console.log(response);
       if (response) {

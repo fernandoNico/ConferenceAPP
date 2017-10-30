@@ -9,6 +9,7 @@ import { Speaker } from './edit-speakers/Speaker.model';
 import { Exhibitor } from './edit-exhibitors/Exhibitor.model';
 import { InnerEventsFormComponent } from './edit-inner-events/edit-inner-events.component';
 import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+import { SubEvent } from './edit-inner-events/SubEvent.model';
 
 
 @Component({
@@ -29,11 +30,6 @@ export class EditEventComponent implements OnInit {
   lng: number ;
   zoom = 15;
 
-  
-
-
-
-
   eventToUpdate: Event;
   eventToUpdateId:number;
 
@@ -43,7 +39,6 @@ export class EditEventComponent implements OnInit {
   // Date Variables
   model;
   model_ends;
-
 
   InnerEventmodelStart;
   InnerEventTimeStart= {hour: 11, minute: 31};
@@ -69,15 +64,14 @@ export class EditEventComponent implements OnInit {
   ExhibitorsList: Exhibitor[];
   SelectedExhibitor: Exhibitor;
 
-  innerEvents: Array <any[]>;
+  innerEvents: SubEvent[];
   SelectedInnerEvent: any;
 
 
 
   addEvent(title: string , eventDescription: string) {
 
-    this.innerEvents.unshift(new Array(title, eventDescription, this.InnerEventmodelStart ,
-               this.InnerEventTimeStart, this.InnerEventmodelEnds , this.InnerEventTimeEnds));
+    this.innerEvents.unshift(new SubEvent(title, title, title, title, 4));
     console.log(this.innerEvents);
   }
 
@@ -171,44 +165,65 @@ export class EditEventComponent implements OnInit {
 
   staticAlertClosed = true;
 
-  constructor(private eventService: EventServiceService, private activatedRoute: ActivatedRoute, private ngbDateParserFormatter: NgbDateParserFormatter ) {
-            this.AttendeesList = []; this.SpeakerList = [] ; this.ExhibitorsList = []; this.innerEvents = []; }
+  constructor(  private eventService: EventServiceService, 
+                private activatedRoute: ActivatedRoute, 
+                private ngbDateParserFormatter: NgbDateParserFormatter ) {
+                
+                  this.AttendeesList = []; 
+                  this.SpeakerList = [] ; 
+                  this.ExhibitorsList = []; 
+                  this.innerEvents = []; 
+                }
+
+
 
    added: string;
    postcode: string;
    selectnewAddress = false;
   ngOnInit() {
     this.getEventtoEdit();
+    this.getSuvEvents();
     this.added = this.activatedRoute.snapshot.params['added'];
     if(this.added === 'added'){
-      console.log(this.added);
        this.staticAlertClosed = false;
        setTimeout(() => this.staticAlertClosed = true, 8000);
     }
-
-    
   }
   
-  // yearStart: any;
-  // monthStart: any;
-  // dayStart: any;
+  getSuvEvents() {
+    var  ParentEventId: any = this.activatedRoute.snapshot.params['id'];
+    this.eventService.getSubEvents(ParentEventId).subscribe(
+      (eventData) => {
+        if (eventData == null) {
+          this.statusMessage = 'Event with given id does not exits' ;
+        }else {
+        this.innerEvents =  eventData;
+        console.log(this.innerEvents);
+      } 
+    },
+    (error) => {
+      this.statusMessage = 'Problem with the service';
+      console.log(error);
+    }
+  );
+  
+}
 
-  // yearEnd: any;
-  // monthEnd: any;
-  // dayEnd: any;
 
-  // hourStart: any;
-  // minStart: any;
 
-  // hourEnd: any;
-  // minEnd: any;
+
+
+
+
+
+
 
  
   Start_model;
   Start_time;
   End_model;
   End_time;
-///////
+
   getEventtoEdit() {
     var  eventId: any = this.activatedRoute.snapshot.params['id'];
     this.eventService.getEventById(eventId).subscribe(
@@ -223,57 +238,22 @@ export class EditEventComponent implements OnInit {
         this.findAddress(this.postcode);
 
         var yearStart =  (this.eventInfo.eventStartDate).substr(0,4);
-        console.log(yearStart);
-
         var monthStart =  (this.eventInfo.eventStartDate).substr(5,2);
-        console.log(monthStart);
-
         var dayStart =  (this.eventInfo.eventStartDate).substr(8,2);
-        console.log(dayStart);
-
-
-
-
-        var hourStart =  (this.eventInfo.eventStartDate).substr(11,2);
-        console.log(hourStart);
-
+        var hourStart =  (this.eventInfo.eventStartDate).substr(11,2);        
         var minStart =  (this.eventInfo.eventStartDate).substr(14,2);
-        console.log(minStart);
 
-
-
-
-        var yearEnd =  (this.eventInfo.eventEndDate).substr(0,4);
-        console.log(yearEnd);
-
+        var yearEnd =  (this.eventInfo.eventEndDate).substr(0,4);        
         var monthEnd =  (this.eventInfo.eventEndDate).substr(5,2);
-        console.log(monthEnd);
-
         var dayEnd =  (this.eventInfo.eventEndDate).substr(8,2);
-        console.log(dayEnd);
-
-
-
-
         var hourEnd =  (this.eventInfo.eventEndDate).substr(11,2);
-        console.log(hourEnd);
         var minEnd =  (this.eventInfo.eventEndDate).substr(14,2);
-        console.log(minEnd);
        
         this.Start_model= { year: yearStart, month: monthStart, day: dayStart };
-        console.log(this.Start_model);
         this.Start_time= {hour: hourStart, minute: minStart, second: 30};
       
         this.End_model= { year: yearEnd, month: monthEnd, day: dayEnd };
         this.End_time= {hour: hourEnd, minute: minEnd, second: 30};
-
-
-        
-
-
-
-
-
         } 
       },
       (error) => {
@@ -284,12 +264,12 @@ export class EditEventComponent implements OnInit {
     
   }
 
-
   hourAmStart: string = "T";
   hourAmEnd: string = "T";
   datetimeStart: string;
   datetimeEnd: string;
   thetime: string;
+
   updateEventInfo(title: string, postcode: string,description: string, street: string){
 
     if(this.Start_time.hour < 10){this.hourAmStart = "T0"; } 
@@ -311,13 +291,10 @@ export class EditEventComponent implements OnInit {
         });
   }
     
-///////////////////
 
 
 
-/////
-
-findAddress(postcode: string) {
+ findAddress(postcode: string) {
       this.eventService.getEventPostcode(postcode).subscribe(
         (Data) => {
           if (Data == null) {
@@ -335,7 +312,7 @@ findAddress(postcode: string) {
       );
     }
   
-findnewAddress(postcode: string) {
+ findnewAddress(postcode: string) {
   this.eventService.getEventPostcode(postcode).subscribe(
     (Data) => {
       if (Data == null) {
@@ -354,8 +331,6 @@ findnewAddress(postcode: string) {
     }
   );
 }
-
-
 
 /////
 }
