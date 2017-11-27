@@ -2,6 +2,11 @@
   <div id="wrapper" >
 
         <ngb-alert class="text-center" *ngIf="!staticAlertClosed" type="info" (close)="staticAlertClosed = true">Event created Sucessfully!</ngb-alert>
+        <ngb-alert class="text-center" *ngIf="!staticAlertClosed1" type="success" (close)="staticAlertClosed1 = true">Event Edited Sucessfully!</ngb-alert>
+
+        <ngb-alert class="text-center" *ngIf="!NewsubEvent" type="info" (close)="NewsubEvent = true">SubEvent created Sucessfully!</ngb-alert>
+        <ngb-alert class="text-center" *ngIf="!EditsubEvent" type="success" (close)="EditsubEvent = true">SubEvent Edited Sucessfully!</ngb-alert>
+        <ngb-alert class="text-center" *ngIf="!DeletesubEvent" type="danger" (close)="DeletesubEvent = true">SubEvent Deleted Sucessfully!</ngb-alert>
     <h2>Event Management</h2>
     <br>
     <ngb-tabset >
@@ -42,7 +47,7 @@
                       
 
                     <div class="form-group col-md-12">
-                            <button type="submit" name="submit"  (click)="findnewAddress(eventInfo.eventPostcode)" class="btn btn-primary ">Find New Address</button>
+                            <button type="submit" name="submit"  (click)="findnewAddress(eventInfo.eventPostcode)" class="btn btn-primary "><i class="fa fa-search" aria-hidden="true"></i> Find New Address</button>
                     </div>
 
                     <div class="w-100"></div>
@@ -64,17 +69,17 @@
                             <form class="form-inline">
                                 <div class="form-group">
                                   <div class="input-group">
-                                    <input class="form-control" placeholder="yyyy-mm-dd"
+                                    <input class="form-control" placeholder="{{ Start_model.year}}-{{ Start_model.month}}-{{ Start_model.day}}"
                                            name="dp" [(ngModel)]="Start_model" ngbDatepicker #start="ngbDatepicker" >
                                     <button class="input-group-addon" (click)="start.toggle()" type="button">
-                                      <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                                        <i class="fa fa-calendar"></i>
                                     </button>
                                   </div>
                                 </div>
                               </form>
                               <br>
                               <!-- <pre>Model: {{ Start_model | json }}</pre> -->
-                              <small><b>Selected Start date: </b>{{ Start_model.year}} - {{ Start_model.month}} - {{ Start_model.day}}</small>
+                              <small><b>Selected Start date: </b>{{ Start_model.year}}-{{ Start_model.month}}-{{ Start_model.day}}</small>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -92,17 +97,18 @@
                               <form class="form-inline">
                                   <div class="form-group">
                                     <div class="input-group">
-                                      <input class="form-control" placeholder="yyyy-mm-dd"
+                                      <input class="form-control" placeholder="{{ End_model.year}}-{{ End_model.month}}-{{ End_model.day}}"
                                              name="dp" [(ngModel)]="End_model" ngbDatepicker #ends="ngbDatepicker">
                                       <button class="input-group-addon" (click)="ends.toggle()" type="button">
-                                        <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                                        <!-- <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/> -->
+                                        <i class="fa fa-calendar"></i>
                                       </button>
                                     </div>
                                   </div>
                                 </form>
                                 <br>
                                 <!-- <pre>Model: {{ End_model | json }}</pre> -->
-                                <small><b>Selected End date: </b>{{ End_model.year}} - {{ End_model.month}} - {{ End_model.day}}</small>
+                                <small><b>Selected End date: </b>{{ End_model.year}}-{{ End_model.month}}-{{ End_model.day}}</small>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -134,42 +140,50 @@
 <!-- Event Schedule Tab *****************************************************************************************************-->
       <ngb-tab>
           <ng-template ngbTabTitle><b>Event Schedule</b> </ng-template>
+
+          
+
           <ng-template ngbTabContent>
             <br>
             <div class="row">
-                <div class="col-sm-7">
-                    <h5>Add <button type="submit" name="submit" (click)="showInnerEventTab = !showInnerEventTab" class="btn btn-warning btn-sm">+</button></h5>
+                <div class="col-sm-8">
+                    <button type="submit" name="submit" (click)="newSubevent()" class="btn btn-warning btn-sm">
+                            <i *ngIf="!showInnerEventTab" class="fa fa-plus" aria-hidden="false"></i> 
+                            <i *ngIf="showInnerEventTab" class="fa fa-times" aria-hidden="false"></i> 
+                            {{showInnerEventTab ? 'Close Form' : 'Add a SubEvent'}}
+                    </button>
+
                     <br>
-                    <form *ngIf="showInnerEventTab" >
+                    <form *ngIf="showInnerEventTab" ngNativeValidate>
                         
                                     <div class="form-row"  >
                                            
                                         <div class="form-group col-md-12">
-                                            <h6>Event Title:</h6>
+                                            <p>Event Title</p>
                                             <!-- <label for="inputEmail4" class="col-form-label">Event Title</label> -->
-                                            <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Event/Conference title" required #title>
+                                            <input type="text" class="form-control" name="username"   id="inputEmail4" placeholder="Enter Event Title"  #subEventTitle required>
                                         </div>
 
                                         <div class="w-100"></div>
 
 
                                         <div class="form-group col-md-12">
-                                          <h6>Starts:</h6>
+                                          <p>Starts:</p>
                                             <form class="form-inline">
                                                 <div class="form-group">
                                                   <div class="input-group">
                                                     <input class="form-control" placeholder="yyyy-mm-dd"
-                                                           name="dp" [(ngModel)]="InnerEventmodelStart" ngbDatepicker #start="ngbDatepicker">
+                                                           name="subEventModelStart" [(ngModel)]="subEventModelStart" ngbDatepicker #start="ngbDatepicker">
                                                     <button class="input-group-addon" (click)="start.toggle()" type="button">
-                                                      <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                                                        <i class="fa fa-calendar"></i>
                                                     </button>
                                                   </div>
                                                 </div>
                                               </form>
                                               <br>
-                                              <ngb-timepicker [(ngModel)]="InnerEventTimeStart" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+                                              <ngb-timepicker [(ngModel)]="subEventTimeStart" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
 
-                                              <!-- <pre>Model: {{ InnerEventmodelStart | json }}</pre> -->
+                                              <!-- <pre>Model: {{ subEventModelStart | json }}</pre> -->
                                         </div>
 
                                         <!-- <div class="form-group col-md-6"> -->
@@ -177,26 +191,26 @@
                                               <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                                                   Meridian - {{meridian ? "ON" : "OFF"}}
                                               </button> -->
-                                              <!-- <pre>Selected time: {{InnerEventTimeStart | json}}</pre> -->
+                                              <!-- <pre>Selected time: {{subEventTimeStart | json}}</pre> -->
                                         <!-- </div> -->
 
 
                                         <div class="form-group col-md-12">
-                                            <h6>Ends:</h6>
+                                            <p>Ends:</p>
                                               <form class="form-inline">
                                                   <div class="form-group">
                                                     <div class="input-group">
                                                       <input class="form-control" placeholder="yyyy-mm-dd"
-                                                             name="dp" [(ngModel)]="InnerEventmodelEnds" ngbDatepicker #ends="ngbDatepicker">
+                                                             name="subEventModelEnd" [(ngModel)]="subEventModelEnd" ngbDatepicker #ends="ngbDatepicker">
                                                       <button class="input-group-addon" (click)="ends.toggle()" type="button">
-                                                        <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                                                        <i class="fa fa-calendar"></i>
                                                       </button>
                                                     </div>
                                                   </div>
                                                 </form>
                                                 <br>
-                                                <ngb-timepicker [(ngModel)]="InnerEventTimeEnds" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
-                                                <!-- <pre>Model: {{ InnerEventmodelEnds | json }}</pre> -->
+                                                <ngb-timepicker [(ngModel)]="subEventTimeEnd" [meridian]="meridian" [ngModelOptions]="{standalone: true}"></ngb-timepicker>
+                                                <!-- <pre>Model: {{ subEventModelEnd | json }}</pre> -->
                                           </div>
 
                                           <!-- <div class="form-group col-md-6"> -->
@@ -204,25 +218,24 @@
                                                 <!-- <button class="btn btn-sm btn-outline-{{meridian ? 'success' : 'danger'}}" (click)="toggleMeridian()">
                                                     Meridian - {{meridian ? "ON" : "OFF"}}
                                                 </button> -->
-                                                <!-- <pre>Selected time: {{InnerEventTimeEnds | json}}</pre> -->
+                                                <!-- <pre>Selected time: {{subEventTimeEnd | json}}</pre> -->
                                           <!-- </div> -->
                                           <div class="form-group col-md-12">    
                                                 <h6>Description</h6>     
                                          
-                                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" #eventDescription></textarea>
+                                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" #subeventDescription required></textarea>
                                         </div>
                                   </div>
                                   <br><br>
                                     <!-- end of form row div -->
-                                          <button type="submit" name="submit" (click)="addEvent(title.value,eventDescription.value)" class="btn btn-primary btn-lg">Submit</button>
+                                          <button type="submit" name="submit" (click)="addSubEvent(subEventTitle.value,subeventDescription.value)" class="btn btn-primary btn-lg">Submit</button>
                                   </form>
 
-                                  <app-inner-events-form  [innerEvent]="SelectedInnerEvent" ></app-inner-events-form >
+                                  <app-inner-events-form *ngIf="editsubevent" [innerEvent]="SelectedInnerEvent" (refresh)="updateList($event)" ></app-inner-events-form >
                                     <br>
                           </div>
                           
-                          <div class="col-sm-5">
-
+                          <div class="col-sm-4">
                                                     <h5>Events Scheduled </h5>
                                                     <br>
                                                     <div class="card" *ngFor="let subEvent of innerEvents  " >
@@ -237,13 +250,14 @@
                                                             <h6 class="card-subtitle mb-2 text-muted">
                                                             {{subEvent.innerEventEndDate| date:'medium' }}
                                                               </h6>
-                                                            <a  class="btn btn-warning btn-sm"(click)="editinnerEvent(innerevents)">Edit</a>
-                                                            <a  class="btn btn-danger btn-sm"(click)="deleteinnerEvent(innerevents)">Delete</a>
+                                                              <button  class="btn btn-warning btn-sm"(click)="editinnerEvent(subEvent)"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
+                                                                <button  class="btn btn-danger btn-sm"(click)="deleteinnerEvent(subEvent)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+
+                                                           
                                                           </div>
                                                       </div>
                                                       <br>
-
-                                                        <br>
+                                                      <br>
 
                             </div>
                 </div>
@@ -304,7 +318,8 @@
                               </div>
 
                           </div>
-                                <button type="submit" name="submit" (click)=" addExhibitor(exhibitorName.value, exhibitorDesc.value , exhibitorEmail.value ,exhibitorRep.value, exhibitorIndustry.value, exhibitorEvent.value)" class="btn btn-primary btn-sm">Submit</button>
+                                <button type="submit" name="submit" (click)=" addExhibitor(exhibitorName.value, exhibitorDesc.value , exhibitorEmail.value,
+                                        exhibitorRep.value, exhibitorIndustry.value, exhibitorEvent.value)" class="btn btn-primary btn-sm">Submit</button>
                         </form>
 
                         <app-edit-exhibitor-form [exhibitor]="SelectedExhibitor" ></app-edit-exhibitor-form>

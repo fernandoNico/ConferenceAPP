@@ -10,7 +10,11 @@ import { Exhibitor } from './edit-exhibitors/Exhibitor.model';
 import { InnerEventsFormComponent } from './edit-inner-events/edit-inner-events.component';
 import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 import { SubEvent } from './edit-inner-events/SubEvent.model';
+import { Router } from '@angular/router';
+import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
+
+const now = new Date();
 
 @Component({
   selector: 'app-edit-event',
@@ -33,18 +37,25 @@ export class EditEventComponent implements OnInit {
   eventToUpdate: Event;
   eventToUpdateId:number;
 
+  // model: NgbDateStruct;
+  // model_ends: NgbDateStruct
 
+  subeventToUpdate: SubEvent;
+  subeventParentId:number;
+
+  subEventModelStart: NgbDateStruct;
+  subEventModelEnd: NgbDateStruct;
+
+
+  subEventTimeStart= {hour: 11, minute: 31, second: 30};
+  subEventTimeEnd= {hour: 12, minute: 31, second: 30};
 
 
   // Date Variables
   model;
   model_ends;
 
-  InnerEventmodelStart;
-  InnerEventTimeStart= {hour: 11, minute: 31};
-
-  InnerEventmodelEnds;
-  InnerEventTimeEnds= {hour: 12, minute: 31};
+  
 
   time = {hour: 13, minute: 30};
   time_ends = {hour: 12, minute: 20};
@@ -68,26 +79,113 @@ export class EditEventComponent implements OnInit {
   SelectedInnerEvent: any;
 
 
+ 
 
-  addEvent(title: string , eventDescription: string) {
 
-    this.innerEvents.unshift(new SubEvent(title, title, title, title, 4));
-    console.log(this.innerEvents);
+
+  subEventDateTimeStart: string;
+  subEventDateTimeEnd: string;
+  addSubEvent(title: string , eventDescription: string) {
+  
+
+  
+    this.subEventDateTimeStart = this.ngbDateParserFormatter.format(this.subEventModelStart) +" "+ this.subEventTimeStart.hour +":"+  this.subEventTimeStart.minute+":"+ this.subEventTimeStart.second;
+    this.subEventDateTimeEnd = this.ngbDateParserFormatter.format(this.subEventModelEnd)  +" "+ this.subEventTimeEnd.hour +":"+  this.subEventTimeEnd.minute+":"+ this.subEventTimeEnd.second;
+
+    console.log(title );
+    console.log(eventDescription);
+    console.log(this.subEventDateTimeStart );
+    console.log(this.subEventDateTimeEnd);
+
+
+    this.subeventToUpdate =  new  SubEvent(title, this.subEventDateTimeStart, this.subEventDateTimeEnd, eventDescription,this.llave);
+    console.log(this.subeventToUpdate);
+    this.eventService.addSubEvents(this.subeventToUpdate).subscribe((response)=>{
+      console.log(response);
+      this.innerEvents.unshift(this.subeventToUpdate);
+      console.log('s');
+      console.log(this.innerEvents);
+      this.NewsubEvent = false;
+      setTimeout(() => this.NewsubEvent = true, 8000);
+
+    });
+
+
+
+  //   console.log(this.eventToUpdateId);
+
+  //   this.eventService.updateEvent(this.eventToUpdate, this.llave)
+  //   .subscribe((response)=>{
+  //       console.log(response);
+  //       // this.router.navigate(['event/', title,'edited']);
+  //            this.staticAlertClosed1 = false;
+  //     setTimeout(() => this.staticAlertClosed1 = true, 8000);
+  //       });
+  // }
+
+
+   
   }
 
-  editinnerEvent(innerevents) {
-    this.SelectedInnerEvent =  innerevents;
+  updateList(){
+     console.log('nomejodas');
+    //  console.log(subEventUpdate);
+
+    // let indexToUpdate = this.innerEvents.find(item=> item.innerEventTitle==subEventUpdate.innerEventTitle);
+    //    console.log(indexToUpdate);
+    // if (indexToUpdate) {
+    //   this.innerEvents[indexToUpdate] = subEventUpdate;
+    // }
     
-    if ( this.showInnerEventTab === true) {
-        this.showInnerEventTab =  false;
+    // findIndex(innerEvents=> innerEvents.innerEventID ==subEventUpdate.innerEventID);
+
+    // console.log(updateItem);
+    // this.innerEvents[updateItem] = subEventUpdate;
+    // console.log('nomejodas');
+    this.innerEvents=[];
+    this.getSuvEvents();
+    this.EditsubEvent = false;
+    setTimeout(() => this.EditsubEvent = true, 8000);
+    
+  }
+
+  
+
+  editsubevent = false;
+  newSubevent(){
+  this.showInnerEventTab = !this.showInnerEventTab;
+  
+    if (this.showInnerEventTab) {
+      this.editsubevent = false;
     }
   }
 
-  deleteinnerEvent(innerevents) {
+
+  editinnerEvent(innerevents) {
+
+    this.SelectedInnerEvent =  innerevents;
+
+    this.editsubevent = true;
+    if (this.showInnerEventTab) {
+      this.showInnerEventTab = false;
+    }
+   
+    
+  }
+  SubEventToDeleteId: number;
+
+  deleteinnerEvent(innerevents : SubEvent) {
+    this.SubEventToDeleteId = innerevents.innerEventID;
+
+    this.eventService.deleteSubEvent(this.SubEventToDeleteId).subscribe(
+      result => console.log(result));  
+
     let indexToDelete = this.innerEvents.indexOf(innerevents);
     if (indexToDelete !== -1) {
       this.innerEvents.splice(indexToDelete, 1);
     }
+    this.DeletesubEvent = false;
+    setTimeout(() => this.DeletesubEvent = true, 8000);
   }
 
 
@@ -164,9 +262,16 @@ export class EditEventComponent implements OnInit {
   }
 
   staticAlertClosed = true;
+  staticAlertClosed1 = true;
+
+  NewsubEvent= true;
+  EditsubEvent= true;
+
+  DeletesubEvent = true;
 
   constructor(  private eventService: EventServiceService, 
                 private activatedRoute: ActivatedRoute, 
+                private router: Router,
                 private ngbDateParserFormatter: NgbDateParserFormatter ) {
                 
                   this.AttendeesList = []; 
@@ -178,16 +283,35 @@ export class EditEventComponent implements OnInit {
 
 
    added: string;
+   edited: string;
    postcode: string;
    selectnewAddress = false;
   ngOnInit() {
+
+
+  // subEventModelStart: NgbDateStruct;
+  // subEventModelEnd: NgbDateStruct;
+    this.subEventModelStart = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
+    this.subEventModelEnd = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
+
+
     this.getEventtoEdit();
     this.getSuvEvents();
     this.added = this.activatedRoute.snapshot.params['added'];
+    // this.edited = this.activatedRoute.snapshot.params['edited'];
+
+  //   if(this.added === 'edited'){
+  //     this.staticAlertClosed1 = false;
+  //     setTimeout(() => this.staticAlertClosed1 = true, 8000);
+  //     // this.staticAlertClosed1 = true;
+  //  }
+
     if(this.added === 'added'){
        this.staticAlertClosed = false;
        setTimeout(() => this.staticAlertClosed = true, 8000);
     }
+
+
   }
   
   getSuvEvents() {
@@ -217,12 +341,13 @@ export class EditEventComponent implements OnInit {
 
 
 
-
  
   Start_model;
   Start_time;
   End_model;
   End_time;
+  
+  llave: number;
 
   getEventtoEdit() {
     var  eventId: any = this.activatedRoute.snapshot.params['id'];
@@ -236,6 +361,9 @@ export class EditEventComponent implements OnInit {
         this.postcode =  this.eventInfo.eventPostcode;
         console.log( this.postcode); 
         this.findAddress(this.postcode);
+
+
+        this.llave =  this.eventInfo.EventId;
 
         var yearStart =  (this.eventInfo.eventStartDate).substr(0,4);
         var monthStart =  (this.eventInfo.eventStartDate).substr(5,2);
@@ -264,30 +392,34 @@ export class EditEventComponent implements OnInit {
     
   }
 
-  hourAmStart: string = "T";
-  hourAmEnd: string = "T";
+  // hourAmStart: string = "T";
+  // hourAmEnd: string = "T";
   datetimeStart: string;
   datetimeEnd: string;
-  thetime: string;
+  // thetime: string;
 
   updateEventInfo(title: string, postcode: string,description: string, street: string){
 
-    if(this.Start_time.hour < 10){this.hourAmStart = "T0"; } 
-    if(this.End_time.hour < 10){this.hourAmEnd = "T0"; }
+    // if(this.Start_time.hour < 10){this.hourAmStart = "T0"; } 
+    // if(this.End_time.hour < 10){this.hourAmEnd = "T0"; }
 
-    this.datetimeStart = this.ngbDateParserFormatter.format(this.Start_model) + this.hourAmStart + this.Start_time.hour +":"+  this.Start_time.minute+":"+ this.Start_time.second;
-    this.datetimeEnd = this.ngbDateParserFormatter.format(this.End_model) + this.hourAmEnd + this.End_time.hour +":"+  this.End_time.minute+":"+ this.End_time.second;
+    this.datetimeStart = this.ngbDateParserFormatter.format(this.Start_model) +" "+ this.Start_time.hour +":"+  this.Start_time.minute+":"+ this.Start_time.second;
+    this.datetimeEnd = this.ngbDateParserFormatter.format(this.End_model)  +" "+ this.End_time.hour +":"+  this.End_time.minute+":"+ this.End_time.second;
 
     console.log(this.datetimeStart );
     console.log(this.datetimeEnd);
 
-    this.eventToUpdateId = this.activatedRoute.snapshot.params['id'];
+    // this.eventToUpdateId = this.activatedRoute.snapshot.params['id'];
     this.eventToUpdate =  new Event(title,this.datetimeStart,this.datetimeEnd, postcode, description, street);
     console.log(this.eventToUpdate);
+    console.log(this.eventToUpdateId);
 
-    this.eventService.updateEvent(this.eventToUpdate, this.eventToUpdateId)
+    this.eventService.updateEvent(this.eventToUpdate, this.llave)
     .subscribe((response)=>{
         console.log(response);
+        // this.router.navigate(['event/', title,'edited']);
+             this.staticAlertClosed1 = false;
+      setTimeout(() => this.staticAlertClosed1 = true, 8000);
         });
   }
     

@@ -9,7 +9,7 @@
                 <div class="col">
                         <form class="form-inline my-2 my-lg-3">
                                 <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                                <button class="btn btn-warning my-2 my-sm-0" type="submit">Search</button>
+                                <button class="btn btn-warning my-2 my-sm-0" type="submit"><i class="fa fa-search" aria-hidden="true"></i> Search</button>
                         </form>
                 </div>
     
@@ -29,8 +29,8 @@
                         
                         </div>
                         <div class="card-footer ">
-                                <a  class="btn btn-warning btn-sm" [routerLink]="['/event', event.EventId]" >Edit </a>
-                                <a  class="btn btn-danger btn-sm" (click)="deleteEvent(event)">Delete </a>
+                                <button  class="btn btn-warning btn-sm" [routerLink]="['/event', event.EventId]"><i class="fa fa-pencil" aria-hidden="true"></i> Edit </button>
+                                <button  class="btn btn-danger btn-sm" (click)="deleteEvent(event)"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete </button>
                         </div>
                 </div>      
         </div>

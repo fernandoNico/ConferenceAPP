@@ -19,12 +19,10 @@ export class EventServiceService {
 
   constructor(private http: Http) {}
 
-getSubEvents(id: number){
+  getSubEvents(id: number){
   return this.http.get('http://localhost:56647/api/SubEvents/'+ id + '/events')
   .map((response: Response) => <Event>response.json()).catch(this.handleError);
-}
-
-
+  }
 
   getEvents() {
     return this.http.get(('http://localhost:56647/api/Events'))
@@ -41,6 +39,8 @@ getSubEvents(id: number){
     .map((res: Response) => res.json()).catch(this.handleError);
   }
 
+
+
 addEvent(event:Event){
     let endpoint = this.url;
     let body = JSON.stringify(event);
@@ -51,15 +51,7 @@ addEvent(event:Event){
         .catch((error:any) => Observable.throw(error.json().error || 'Server Error'));
 }
 
-addSubEvents(id: number, event:SubEvent){
-  let endpoint = 'http://localhost:56647/api/Events/'+ id;
-  let body = JSON.stringify(event);
-  let headers = new Headers({'Content-Type':'application/json'});
-  let options = new RequestOptions({headers: headers});
-  return this.http.post(endpoint, body, options)
-      .map((res:Response) => res.json())
-      .catch((error:any) => Observable.throw(error.json().error || 'Server Error'));
-}
+
 
 
 updateEvent(event:Event, id:number){
@@ -74,13 +66,48 @@ updateEvent(event:Event, id:number){
       .catch((error:any) => Observable.throw(error.json().error || 'Server Error'));
 }
 
-
-
-
 deleteEvent(id:number) {
   return this.http.delete('http://localhost:56647/api/Events/' +  id, this.options).map((response: Response) => response.json())
   .catch(this.handleError);
 }
+
+
+addSubEvents(subevent1:SubEvent){
+  let endpoint = 'http://localhost:56647/api/SubEvents';
+  let body = JSON.stringify(subevent1);
+  let headers = new Headers({'Content-Type':'application/json'});
+  let options = new RequestOptions({headers: headers});
+  return this.http.post(endpoint, body, options)
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'Server Error'));
+}
+
+updateSubEvent(subEventUpdate:SubEvent, id:number){
+  // let endpoint = `${this.url}/${id}`;
+  let endpoint = 'http://localhost:56647/api/SubEvents/'+ id;
+  //let endpoint = this.url + event.EventId;
+  console.log(endpoint);
+  let body = JSON.stringify(subEventUpdate);
+  let headers = new Headers({'Content-Type':'application/json'});
+  let options = new RequestOptions({headers: headers});
+  return this.http.put(endpoint, body, options)
+      .map((res:Response) => res.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'Server Error'));
+}
+
+deleteSubEvent(id:number) {
+  return this.http.delete('http://localhost:56647/api/SubEvents/' +  id, this.options).map((response: Response) => response.json())
+  .catch(this.handleError);
+}
+
+
+
+
+
+
+
+
+
 
 
 

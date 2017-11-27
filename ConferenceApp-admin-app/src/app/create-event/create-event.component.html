@@ -25,7 +25,7 @@
           </div>
 
           <div class="form-group col-md-12">
-              <button type="submit" name="submit"  (click)="findAddress(postcode.value)" class="btn btn-primary ">Find Address</button>
+              <button type="submit" name="submit"  (click)="findAddress(postcode.value)" class="btn btn-primary "><i class="fa fa-search" aria-hidden="true"></i> Find Address</button>
           </div>
 
           <div class="w-100"></div>
@@ -46,10 +46,10 @@
                 <form class="form-inline">
                     <div class="form-group">
                       <div class="input-group">
-                        <input class="form-control" placeholder="yyyy-mm-dd"
+                        <input class="form-control" placeholder="model"
                               name="dp" [(ngModel)]="model" ngbDatepicker #start="ngbDatepicker">
                         <button class="input-group-addon" (click)="start.toggle()" type="button">
-                          <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                          <i class="fa fa-calendar"></i>
                         </button>
                       </div>
                     </div>
@@ -74,10 +74,10 @@
                 <form class="form-inline">
                     <div class="form-group">
                       <div class="input-group">
-                        <input class="form-control" placeholder="yyyy-mm-dd"
+                        <input class="form-control" placeholder="model_ends"
                                name="dp" [(ngModel)]="model_ends" ngbDatepicker #ends="ngbDatepicker">
                         <button class="input-group-addon" (click)="ends.toggle()" type="button">
-                          <img src="img/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                          <i class="fa fa-calendar"></i>
                         </button>
                       </div>
                     </div>

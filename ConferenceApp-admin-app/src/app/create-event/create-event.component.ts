@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EventServiceService } from '../event-service.service';
-
+import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { Event, Eventos } from '../events/event.model';
 import { Router } from '@angular/router';
 import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
+
+const now = new Date();
 
 @Component({
   selector: 'app-create-event',
@@ -13,10 +15,14 @@ import {NgbDateParserFormatter} from '@ng-bootstrap/ng-bootstrap';
 })
 export class CreateEventComponent implements OnInit {
   AddressList: any;
-  model;
-  model_ends;
   statusMessage: string;
 
+
+  model: NgbDateStruct;
+  model_ends: NgbDateStruct;
+
+  
+  
   dateStart: any ;
   dateEnd: any ;
 
@@ -42,7 +48,8 @@ export class CreateEventComponent implements OnInit {
 
   constructor(private eventService: EventServiceService, private router: Router, private ngbDateParserFormatter: NgbDateParserFormatter) { }
   ngOnInit() {
-  
+    this.model = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
+    this.model_ends = {year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate()};
   }
 
   // Get the selected street address
@@ -51,15 +58,24 @@ export class CreateEventComponent implements OnInit {
     console.log(this.street);
   }
  
-  hourAmStart: string = "T";
-  hourAmEnd: string = "T";
+  // hourAmStart: string = "T";
+  // hourAmEnd: string = "T";
   addEvent(title : string ,postcode : string ,description :  string ){
    
-    if(this.time.hour < 10){this.hourAmStart = "T0"; } 
-    if(this.time_ends.hour < 10){this.hourAmEnd = "T0"; }
+    // if(this.time.hour < 10){this.hourAmStart = " 0"; } 
+  //   if(this.time.minute == 0){this.hourAmStart = "10";
+  //   console.log(this.time.minute);
+  // } 
 
-    this.datetimeStart = this.ngbDateParserFormatter.format(this.model) + this.hourAmStart + this.time.hour +":"+  this.time.minute+":"+ this.time.second;
-    this.datetimeEnd = this.ngbDateParserFormatter.format(this.model_ends) + this.hourAmEnd + this.time_ends.hour +":"+  this.time_ends.minute+":"+ this.time_ends.second;
+    // if(this.time_ends.hour < 10){this.hourAmEnd = " 0"; }
+    // if(this.time_ends.minute ==0){this.hourAmEnd = "10";
+    // console.log(this.time_ends.minute); }
+
+    this.datetimeStart = this.ngbDateParserFormatter.format(this.model) +" "+ this.time.hour +":"+  this.time.minute+":"+ this.time.second;
+    this.datetimeEnd = this.ngbDateParserFormatter.format(this.model_ends) +" "+ this.time_ends.hour +":"+  this.time_ends.minute+":"+ this.time_ends.second;
+
+    // this.datetimeStart = this.ngbDateParserFormatter.format(this.model) + this.hourAmStart + this.time.hour +":"+  this.time.minute+":"+ this.time.second;
+    // this.datetimeEnd = this.ngbDateParserFormatter.format(this.model_ends) + this.hourAmEnd + this.time_ends.hour +":"+  this.time_ends.minute+":"+ this.time_ends.second;
 
     console.log(this.datetimeStart );
     console.log(this.datetimeEnd);

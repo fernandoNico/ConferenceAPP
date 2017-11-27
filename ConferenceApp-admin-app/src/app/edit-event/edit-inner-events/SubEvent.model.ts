@@ -1,21 +1,26 @@
 export class SubEvent {
-    subEventId: number;
-    subEventTitle: string;
-    subEventStartDate: string;
-    subEventEndDate: string;
-    subEventDescription: string;
-    ParentEventId: number;
+    innerEventID: number;
+    innerEventTitle: string;
+    innerEventStartDate: string;
+    innerEventEndDate: string;
+    innerEventDescription: string;
+    EventId: number;
     
 
 
-    constructor(    subEventTitle: string, subEventStartDate: string, subEventEndDate: string, 
-                    subEventDescription: string, ParentEventId: number ){
+    constructor(    innerEventTitle: string, innerEventStartDate: string, innerEventEndDate: string, 
+                    innerEventDescription: string, EventId: number ){
       
-            this.subEventTitle =     subEventTitle;  
-            this.subEventStartDate =  subEventStartDate;
-            this.subEventEndDate =   subEventEndDate;
-            this.subEventDescription = subEventDescription;
-            this.ParentEventId =  ParentEventId;
+            this.innerEventTitle =     innerEventTitle;  
+            this.innerEventStartDate =  innerEventStartDate;
+            this.innerEventEndDate =   innerEventEndDate;
+            this.innerEventDescription = innerEventDescription;
+            this.EventId =  EventId;
            
     }
+
+    
+
+
+    
 }

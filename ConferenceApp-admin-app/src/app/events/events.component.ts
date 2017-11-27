@@ -30,6 +30,7 @@ export class EventsComponent implements OnInit {
 
   deleteEvent(event: Event){
     this.toDeleteId = event.EventId;
+    
     this.eventService.deleteEvent(this.toDeleteId).subscribe(
     result => console.log(result));  
 
